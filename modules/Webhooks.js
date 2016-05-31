@@ -1,5 +1,7 @@
 'use strict';
 
+import React from 'react'
+
 var data = [
   {
     "datasource": "github",

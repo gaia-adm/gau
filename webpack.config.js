@@ -6,9 +6,11 @@ module.exports = {
 //  externals: [nodeExternals()],
   debug: true,
   devtool: 'eval-source-map',
-  entry: './public/scripts/main.js',
+  entry: './index.js',
   output: {
-    filename: './public/bundle.js'
+    path: 'public',
+    filename: 'bundle.js',
+    publicPath:'/'
   },
   module: {
     loaders: [
@@ -22,6 +24,6 @@ module.exports = {
   resolve: {
     // you can now require('file') instead of require('file.coffee')
     extensions: ['', '.js', '.json', '.coffee'],
-    modulesDirectories: ['./public/scripts','./node_modules']
+    modulesDirectories: ['./modules','./node_modules']
   }
 };

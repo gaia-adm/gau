@@ -1,6 +1,6 @@
 'use strict';
 
-var React = require('react');
+import React from 'react'
 
 var Tokens = React.createClass({
   render: function () {
