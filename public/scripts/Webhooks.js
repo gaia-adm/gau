@@ -36,7 +36,7 @@ var WebhookBox = React.createClass({
     return (
       <div className="tokenBox">
         <h2>Webhooks:</h2>
-        <WebhookList data={this.props.data}/>
+        <WebhookList data={data}/>
       </div>
 
     )
@@ -135,7 +135,4 @@ var WebhookEditor = React.createClass({
 });
 
 
-ReactDOM.render(
-  <WebhookBox data={data}/>,
-  document.getElementById('content')
-);
+module.exports = WebhookBox;
