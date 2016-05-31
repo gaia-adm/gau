@@ -9,7 +9,8 @@ import Webhooks from './modules/Webhooks';
 import Tokens from './modules/Tokens';
 
 
-render((
+render(
+  (
   <Router history={browserHistory}>
     <Route path="/" component={App} />
       <Route path="/" component={Home}/>

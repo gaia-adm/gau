@@ -15,7 +15,7 @@ var logger = log4js.getLogger('server');
 
 var app=express();
 app.set('port', (process.env.PORT || 4000));
-app.use('/', express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(function (req, res, next) {
