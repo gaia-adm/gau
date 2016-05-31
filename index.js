@@ -2,20 +2,10 @@
 
 import React from 'react'
 import {render} from 'react-dom'
-import {Router, Route, browserHistory, IndexRoute} from 'react-router';
-import App from './modules/App';
-import Home from './modules/Home';
-import Webhooks from './modules/Webhooks';
-import Tokens from './modules/Tokens';
+import {Router, browserHistory} from 'react-router';
+import routes from './modules/routes'
 
 
 render(
-  (
-  <Router history={browserHistory}>
-    <Route path="/" component={App} />
-      <Route path="/" component={Home}/>
-      <Route path="/webhooks" component={Webhooks}/>
-      <Route path="/tokens" component={Tokens}/>
-  </Router>
-), document.getElementById('content'));
+  (<Router routes={routes} history={browserHistory} />), document.getElementById('content'));
 

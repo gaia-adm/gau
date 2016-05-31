@@ -70,3 +70,7 @@ ul {
 #editWebhook, #deleteWebhook {
   margin-top: 5px;
 }
+
+.active {
+  color: red;
+}
