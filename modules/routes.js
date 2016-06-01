@@ -4,11 +4,12 @@ import App from './App';
 import Home from './Home';
 import Webhooks from './Webhooks';
 import Tokens from './Tokens';
+import shared from '../SharedConsts'
 
 module.exports = (
-  <Route path="/gau/" component={App}>
+  <Route path={'/'+shared.uiPath+'/'} component={App}>
     <IndexRoute component={Home}/>
-    <Route path="/gau/webhooks" component={Webhooks}/>
-    <Route path="/gau/tokens" component={Tokens}/>
+    <Route path={'/'+shared.uiPath+'/webhooks'} component={Webhooks}/>
+    <Route path={'/'+shared.uiPath+'/tokens'} component={Tokens}/>
   </Route>
 );

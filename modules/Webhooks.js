@@ -2,7 +2,7 @@
 
 import React from 'react'
 import {Alert, Button} from 'react-bootstrap'
-
+import shared from '../SharedConsts'
 
 var data = [
   /*  {
@@ -50,7 +50,7 @@ var WebhookBox = React.createClass({
     console.log('mounted');
     $.ajax({
       type: 'GET',
-      url: '/gab/webhooks',
+      url: '/'+shared.bePath+'/webhooks',
       datatype: 'json',
       cache: false,
       headers: {'Authorization': 'Bearer aaaaaaaaaaaaaaaaaaaaaaaaa'},
