@@ -6,9 +6,9 @@ import Webhooks from './Webhooks';
 import Tokens from './Tokens';
 
 module.exports = (
-  <Route path="/" component={App}>
+  <Route path="/gau/" component={App}>
     <IndexRoute component={Home}/>
-    <Route path="/webhooks" component={Webhooks}/>
-    <Route path="/tokens" component={Tokens}/>
+    <Route path="/gau/webhooks" component={Webhooks}/>
+    <Route path="/gau/tokens" component={Tokens}/>
   </Route>
-)
+);

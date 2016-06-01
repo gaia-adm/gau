@@ -19,9 +19,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-// send all requests to index.html so browserHistory works
+app.use(require('./controllers/webhook-controller'));
 
-app.use(function (req, res, next) {
+
+// add trailing slash for just a root context url so that /gau will work with catch-all routing below
+app.use('*', function (req, res, next) {
+    if(req.originalUrl.endsWith('gau')){
+        res.redirect(301, req.originalUrl+'/');
+    } else {
+        next();
+    }
+});
+
+// Catch-all routing: send all requests to index.html so browserHistory works
+app.use('/gau/*', function (req, res) {
     //Does not work - going to index.html to ensure that clean urls working on refresh
 /*    //Set permissive CORS header - looks like a security breach when used with asterix
     res.set('Access-Control-Allow-Origin','*');

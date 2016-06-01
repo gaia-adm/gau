@@ -7,9 +7,9 @@ var App = React.createClass({
     return (
       <div>
         <ul role="nav">
-          <li><Link to="/" onlyActiveOnIndex activeStyle={{ color: 'purple' }}>Home</Link></li>
-          <li><Link to="/webhooks" activeStyle={{ color: 'purple' }}>Webhooks</Link></li>
-          <li><Link to="/tokens" activeStyle={{ color: 'purple' }}>Access Tokens</Link></li>
+          <li><Link to="/gau/" onlyActiveOnIndex activeStyle={{ color: 'purple' }}>Home</Link></li>
+          <li><Link to="/gau/webhooks" activeStyle={{ color: 'purple' }}>Webhooks</Link></li>
+          <li><Link to="/gau/tokens" activeStyle={{ color: 'purple' }}>Access Tokens</Link></li>
         </ul>
         {this.props.children || <Home/>}
       </div>
