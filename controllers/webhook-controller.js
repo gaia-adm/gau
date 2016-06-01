@@ -25,7 +25,7 @@ router.get('/'+bePath+'/webhooks', function (req, res) {
     res.status(HttpStatus.UNAUTHORIZED).send();
   } else {
     var options={
-      url: 'http://webhook.boris.gaiahub.io/wh/config/',
+      url: 'http://uuuuuuuuuuuuuu/wh/config/',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -34,7 +34,7 @@ router.get('/'+bePath+'/webhooks', function (req, res) {
     };
     request.get(options, function (err, resRemote, body) {
       if(resRemote.statusCode != HttpStatus.OK){
-        console.log('Error: ' + resRemote.statusMessage);
+        console.log('Error: ' + resRemote.statusMessage+'; called ' + options.url);
         res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({message: resRemote.statusMessage});
       } else {
         console.log('Webhooks list received: '+body);

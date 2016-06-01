@@ -26,10 +26,8 @@ app.use(require('./controllers/webhook-controller'));
 // add trailing slash for just a root context url so that /css will work with catch-all routing below
 app.use('*', function (req, res, next) {
     if(req.originalUrl.endsWith(uiPath)){
-        console.log('here');
         res.redirect(301, req.originalUrl+'/');
     } else {
-        console.log('there');
         next();
     }
 });

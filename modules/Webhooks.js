@@ -1,47 +1,91 @@
 'use strict';
 
 import React from 'react'
+import {Alert, Button} from 'react-bootstrap'
+
 
 var data = [
-  {
-    "datasource": "github",
-    "eventType": "push",
-    "apiToken": "3a44a3cd-66e6-4dd1-83e0-f6bde38fc08e",
-    "tenantId": 1056454051,
-    "token": "37b9d70f87fcf9b388b629d2888358ef5bbb5394",
-    "hookUrl": "https://webhook.boris.gaiahub.io/wh/3a44a3cd-66e6-4dd1-83e0-f6bde38fc08e/37b9d70f87fcf9b388b629d2888358ef5bbb5394",
-    "tsField": "repository.pushed_at"
-  },
-  {
-    "datasource": "dockerhub",
-    "eventType": "push",
-    "tsField": "push_data.pushed_at",
-    "createdAt": 1463989059120,
-    "apiToken": "3a44a3cd-66e6-4dd1-83e0-f6bde38fc08e",
-    "tenantId": 1056454051,
-    "token": "69e9428cf392271051a8a528d686c97dd5aad5d1",
-    "hookUrl": "https://webhook.webhook.boris.gaiahub.io/wh/3a44a3cd-66e6-4dd1-83e0-f6bde38fc08e/69e9428cf392271051a8a528d686c97dd5aad5d1"
-  },
-  {
-    "datasource": "trello",
-    "eventType": "management",
-    "createdAt": 1463672199301,
-    "apiToken": "3a44a3cd-66e6-4dd1-83e0-f6bde38fc08e",
-    "tenantId": 1056454051,
-    "token": "811aeeb408b29857edb349865f71b5a7c153ffad",
-    "hookUrl": "https://webhook.webhook.boris.gaiahub.io/wh/3a44a3cd-66e6-4dd1-83e0-f6bde38fc08e/811aeeb408b29857edb349865f71b5a7c153ffad"
-  }
+  /*  {
+   "datasource": "github",
+   "eventType": "push",
+   "apiToken": "3a44a3cd-66e6-4dd1-83e0-f6bde38fc08e",
+   "tenantId": 1056454051,
+   "token": "37b9d70f87fcf9b388b629d2888358ef5bbb5394",
+   "hookUrl": "https://webhook.boris.gaiahub.io/wh/3a44a3cd-66e6-4dd1-83e0-f6bde38fc08e/37b9d70f87fcf9b388b629d2888358ef5bbb5394",
+   "tsField": "repository.pushed_at"
+   },
+   {
+   "datasource": "dockerhub",
+   "eventType": "push",
+   "tsField": "push_data.pushed_at",
+   "createdAt": 1463989059120,
+   "apiToken": "3a44a3cd-66e6-4dd1-83e0-f6bde38fc08e",
+   "tenantId": 1056454051,
+   "token": "69e9428cf392271051a8a528d686c97dd5aad5d1",
+   "hookUrl": "https://webhook.webhook.boris.gaiahub.io/wh/3a44a3cd-66e6-4dd1-83e0-f6bde38fc08e/69e9428cf392271051a8a528d686c97dd5aad5d1"
+   },
+   {
+   "datasource": "trello",
+   "eventType": "management",
+   "createdAt": 1463672199301,
+   "apiToken": "3a44a3cd-66e6-4dd1-83e0-f6bde38fc08e",
+   "tenantId": 1056454051,
+   "token": "811aeeb408b29857edb349865f71b5a7c153ffad",
+   "hookUrl": "https://webhook.webhook.boris.gaiahub.io/wh/3a44a3cd-66e6-4dd1-83e0-f6bde38fc08e/811aeeb408b29857edb349865f71b5a7c153ffad"
+   }*/
 ];
 
 var WebhookBox = React.createClass({
-  render: function () {
-    return (
-      <div className="tokenBox">
-        <h2>Webhooks:</h2>
-        <WebhookList data={data}/>
-      </div>
 
-    )
+  getInitialState() {
+    console.log('initialization');
+    return {
+      data: [],
+      alertVisible: false,
+      errorMessage: ''
+    }
+  },
+
+  componentDidMount() {
+    console.log('mounted');
+    $.ajax({
+      type: 'GET',
+      url: '/gab/webhooks',
+      datatype: 'json',
+      cache: false,
+      headers: {'Authorization': 'Bearer aaaaaaaaaaaaaaaaaaaaaaaaa'},
+      success: function (data) {
+        console.log('Body: ' + JSON.stringify(data));
+        this.setState({alertVisible: false, data: data});
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.error(xhr.url, status, err.toString());
+        this.setState({alertVisible: true, data: [], errorMessage: err.toString()+' (Reason: ' + (xhr.responseJSON ? xhr.responseJSON.message : 'unkonwn') +')' });
+      }.bind(this)
+    });
+  },
+  handleAlertDismiss() {
+    this.setState({alertVisible: false});
+  },
+  render: function () {
+    if (this.state.alertVisible) {
+      return (
+        <div className="tokenBox">
+          <h2>Webhooks:</h2>
+          <Alert bsStyle="danger" onDismiss={this.handleAlertDismiss}>
+            <h4>Error occurred - {this.state.errorMessage}</h4>
+            <Button onClick={this.handleAlertDismiss}>Got it!</Button>
+          </Alert>
+        </div>
+      )
+    } else {
+      return (
+        <div className="tokenBox">
+          <h2>Webhooks:</h2>
+          <WebhookList data={this.state.data}/>
+        </div>
+      )
+    }
   }
 });
 
@@ -83,10 +127,11 @@ var Webhook = React.createClass({
         <br/><b>URL:</b> {this.props.hookUrl}<br/>
         { this.state.showEditor ? <WebhookEditor tsField={this.props.tsField}/> : null }
         <button className="btn btn-primary" id="editWebhook" type="button" onClick={this.onEditClick}>Edit</button>
-          &nbsp;
-          <button className="btn btn-danger" id="deleteWebhook" type="button"
-                  onClick={this.onDeleteClick} >Delete</button>
-          &nbsp;
+        &nbsp;
+        <button className="btn btn-danger" id="deleteWebhook" type="button"
+                onClick={this.onDeleteClick}>Delete
+        </button>
+        &nbsp;
         <p/>
       </div>
     )
