@@ -11,7 +11,7 @@
   "scripts": {
     "prestart": "npm install",
     "postinstall": "webpack --colors",
-    "start": "node server.js",
+    "start": "set http_proxy=http://web-proxy.israel.hp.com:8080 https_proxy=http://web-proxy.israel.hp.com:8080 && node server.js",
     "test": "set http_proxy=http://web-proxy.israel.hp.com:8080 https_proxy=http://web-proxy.israel.hp.com:8080 && node %NODE_DEBUG_OPTION% server.js"
   },
   "dependencies": {

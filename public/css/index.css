@@ -65,7 +65,7 @@ ul {
 #mainTitle {
   background-color: #f0f0f0;
   text-align: center;
-  color: red;
+  color: #003366;
 }
 
 #editWebhook, #deleteWebhook {
@@ -73,5 +73,5 @@ ul {
 }
 
 #content {
-  margin-left: 5px;
+  margin-left: 10px;
 }

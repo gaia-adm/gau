@@ -4,19 +4,21 @@ var express = require('express');
 var router = express.Router();
 var HttpStatus = require('http-status-codes');
 var request = require('request');
+var bePath = require('../SharedConsts').bePath;
 
-router.use('/gab/*', function (req, res, next) {
+
+router.use('/'+bePath+'/*', function (req, res, next) {
   console.log('Got request to backend: ' + req.originalUrl);
   next();
 });
 
-router.get('/gab/hello/:user?', function (req, res) {
+router.get('/'+bePath+'/hello/:user?', function (req, res) {
   var user = req.params.user ? req.params.user : 'nobody';
   console.log('Send greetings to ' + user);
   res.status(HttpStatus.OK).json({message: 'Hello, '+user});
 });
 
-router.get('/gab/webhooks', function (req, res) {
+router.get('/'+bePath+'/webhooks', function (req, res) {
   var token = req.get('Authorization');
   if(!token){
     console.log('Unauthorized request to ' + req.originalUrl);
