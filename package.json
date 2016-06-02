@@ -10,8 +10,8 @@
   "license": "ISC",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
-    "start:prod": "set http_proxy=aaa https_proxy=aaa && npm install && webpack && node server.js",
-    "start:dev": "set http_proxy=aaa https_proxy=aaa && npm install && webpack && node server.js",
+    "start:prod": "npm install && webpack && node server.js",
+    "start:dev": "npm install && webpack && node server.js",
     "test": "jest",
     "test:cov": "jest --coverage",
     "test:lint": "eslint ./modules --ext .js --ext .jsx --ignore-path .gitignore --cache"
