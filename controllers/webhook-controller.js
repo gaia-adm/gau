@@ -25,7 +25,7 @@ router.get('/'+bePath+'/webhooks', function (req, res) {
     res.status(HttpStatus.UNAUTHORIZED).send();
   } else {
     var options={
-      url: 'http://uuuuuuuuuuuuuu/wh/config/',
+      url: 'http://aaa/wh/config/',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
