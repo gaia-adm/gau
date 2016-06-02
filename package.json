@@ -12,7 +12,16 @@
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
     "start:prod": "set http_proxy=http://web-proxy.israel.hp.com:8080 https_proxy=http://web-proxy.israel.hp.com:8080 && npm install && webpack && node server.js",
     "start:dev": "set http_proxy=http://web-proxy.israel.hp.com:8080 https_proxy=http://web-proxy.israel.hp.com:8080 && npm install && webpack && node server.js",
-    "test": "set http_proxy=http://web-proxy.israel.hp.com:8080 https_proxy=http://web-proxy.israel.hp.com:8080 && node %NODE_DEBUG_OPTION% server.js"
+    "test": "jest",
+    "test:cov": "jest --coverage",
+    "test:lint": "eslint ./modules --ext .js --ext .jsx --ignore-path .gitignore --cache"
+  },
+  "jest": {
+    "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/react/",
+      "<rootDir>/node_modules/react-dom/",
+      "<rootDir>/node_modules/react-addons-test-utils/"
+    ]
   },
   "dependencies": {
     "body-parser": "^1.14.1",
@@ -29,9 +38,16 @@
   },
   "devDependencies": {
     "babel-core": "^6.9.1",
+    "babel-eslint": "^6.0.4",
+    "babel-jest": "^12.1.0",
     "babel-loader": "^6.2.4",
+    "babel-polyfill": "^6.9.1",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.5.0",
+    "eslint": "^2.11.1",
+    "eslint-plugin-react": "^5.1.1",
+    "jest-cli": "^12.1.1",
+    "react-addons-test-utils": "^15.1.0",
     "webpack": "^1.13.1",
     "webpack-node-externals": "^1.2.0"
   }

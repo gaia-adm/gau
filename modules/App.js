@@ -5,6 +5,10 @@ import shared from '../SharedConsts'
 
 var App = React.createClass({
 
+  propTypes: {
+    children: React.PropTypes.element
+  },
+
   render: function () {
     return (
       <div>

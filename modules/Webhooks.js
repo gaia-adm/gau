@@ -4,8 +4,8 @@ import React from 'react'
 import {Alert, Button} from 'react-bootstrap'
 import shared from '../SharedConsts'
 
-var data = [
-  /*  {
+/*var data = [
+    {
    "datasource": "github",
    "eventType": "push",
    "apiToken": "3a44a3cd-66e6-4dd1-83e0-f6bde38fc08e",
@@ -32,10 +32,16 @@ var data = [
    "tenantId": 1056454051,
    "token": "811aeeb408b29857edb349865f71b5a7c153ffad",
    "hookUrl": "https://webhook.webhook.boris.gaiahub.io/wh/3a44a3cd-66e6-4dd1-83e0-f6bde38fc08e/811aeeb408b29857edb349865f71b5a7c153ffad"
-   }*/
-];
+   }
+];*/
 
 var WebhookBox = React.createClass({
+
+  propTypes: {
+    data: React.PropTypes.array,
+    errorMessage: React.PropTypes.string,
+    alertVisible: React.PropTypes.bool
+  },
 
   getInitialState() {
     console.log('initialization');
@@ -91,6 +97,11 @@ var WebhookBox = React.createClass({
 
 
 var WebhookList = React.createClass({
+
+  propTypes: {
+    data: React.PropTypes.array
+  },
+
   render: function () {
     var tokens = this.props.data.map(function (t) {
       return (
@@ -106,6 +117,14 @@ var WebhookList = React.createClass({
 });
 
 var Webhook = React.createClass({
+
+  propTypes: {
+    datasource: React.PropTypes.string,
+    event: React.PropTypes.string,
+    hookUrl: React.PropTypes.string,
+    tsField: React.PropTypes.string
+  },
+
   getInitialState: function () {
     return ({showEditor: false});
   },
@@ -139,6 +158,11 @@ var Webhook = React.createClass({
 });
 
 var WebhookEditor = React.createClass({
+
+  propTypes: {
+    tsField: React.PropTypes.string
+  },
+
   getInitialState: function () {
     return {tsField: this.props.tsField, hasChanges: false}
   },
@@ -166,7 +190,7 @@ var WebhookEditor = React.createClass({
       <div className="tokenEditor">
 
 
-        <b>Timestamp field: </b> <input type="text" class="form-control" onChange={this.onChange}
+        <b>Timestamp field: </b> <input type="text" size="50" onChange={this.onChange}
                                         value={this.state.tsField}></input>&nbsp;
 
         {this.state.hasChanges ?
