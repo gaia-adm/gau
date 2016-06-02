@@ -148,7 +148,7 @@ var Webhook = React.createClass({
         { this.state.showEditor ? <WebhookEditor tsField={this.props.tsField}/> : null }
         <button className="btn btn-primary" id={"editWebhook"+this.props.tid} type="button" onClick={this.onEditClick}>Edit</button>
         &nbsp;
-        <button className="btn btn-danger" id="deleteWebhook" type="button"
+        <button className="btn btn-danger" id={"deleteWebhook"+this.props.tid} type="button"
                 onClick={this.onDeleteClick}>Delete
         </button>
         &nbsp;

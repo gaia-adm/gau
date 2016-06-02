@@ -68,9 +68,14 @@ ul {
   color: #003366;
 }
 
-#editWebhook, #deleteWebhook {
+button[id^='editWebhook'] {
   margin-top: 5px;
 }
+button[id^='deleteWebhook'] {
+  margin-top: 5px;
+}
+
+
 
 #content {
   margin-left: 10px;
