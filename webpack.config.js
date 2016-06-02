@@ -7,26 +7,23 @@ module.exports = {
 //  externals: [nodeExternals()], //do not include node modules (not core). problematic - we need react* at least
   debug: true,
   devtool: 'eval-source-map',  //bigger package but better for debugging
-  //devtool: 'source-map', //smaller package but worse for debugging
+  //devtool: 'source-map', //smaller package but worse for debugging - ~7 times difference in bundle size
   entry: './index.js',
   output: {
     path: 'public',
     filename: 'bundle.js',
     publicPath:'/'
   },
-/*  plugins: [
+  plugins: process.env.NODE_ENV === 'production' ? [
+    //cannot see any effect; should EnvironmentPlugin be configured?
+    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production')
-      }
-    }),
     new webpack.optimize.UglifyJsPlugin({
       compressor: {
-        warnings: false
+        warnings: true
       }
     })
-  ],*/
+  ] : [],
   module: {
     loaders: [
       {

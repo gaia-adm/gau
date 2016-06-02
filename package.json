@@ -9,15 +9,17 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "prestart": "npm install",
-    "postinstall": "webpack --colors",
-    "start": "set http_proxy=http://web-proxy.israel.hp.com:8080 https_proxy=http://web-proxy.israel.hp.com:8080 && node server.js",
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:prod": "set http_proxy=http://web-proxy.israel.hp.com:8080 https_proxy=http://web-proxy.israel.hp.com:8080 && npm install && webpack && node server.js",
+    "start:dev": "set http_proxy=http://web-proxy.israel.hp.com:8080 https_proxy=http://web-proxy.israel.hp.com:8080 && npm install && webpack && node server.js",
     "test": "set http_proxy=http://web-proxy.israel.hp.com:8080 https_proxy=http://web-proxy.israel.hp.com:8080 && node %NODE_DEBUG_OPTION% server.js"
   },
   "dependencies": {
     "body-parser": "^1.14.1",
+    "compression": "^1.6.2",
     "express": "^4.13.3",
     "http-status-codes": "^1.0.6",
+    "if-env": "^1.0.0",
     "log4js": "^0.6.36",
     "react": "^15.1.0",
     "react-bootstrap": "^0.29.4",
