@@ -8,7 +8,7 @@ var bePath = require('../SharedConsts').bePath;
 
 require('request').debug = false;
 
-var serverName = 'aaa';
+var serverName = process.env.SRV_DNS;
 
 
 //for testing
