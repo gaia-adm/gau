@@ -26,7 +26,7 @@ var WebhookBox = React.createClass({
     console.log('mounted');
     $.ajax({
       type: 'GET',
-      url: '/'+shared.bePath+'/webhooks',
+      url: '/'+shared.bePath+'/webhook',
       datatype: 'json',
       cache: false,
       headers: {'Authorization': 'Bearer aaa'},
