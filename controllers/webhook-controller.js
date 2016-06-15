@@ -108,7 +108,6 @@ routerWHC.delete('/' + bePath + '/webhook/:id', function (req, res) {
         'Authorization': token
       }
     };
-console.log('starting delete: '+ new Date());
     request.delete(options, function (err, resRemote, body) {
       if (err) {
         res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({message: err.message});

@@ -29,7 +29,7 @@ var WebhookBox = React.createClass({
       url: '/'+shared.bePath+'/webhook',
       datatype: 'json',
       cache: false,
-      headers: {'Authorization': 'Bearer aaa'},
+      headers: {'Authorization': 'Bearer '+shared.apiToken},
       success: function (data) {
         console.log('Body: ' + JSON.stringify(data));
         this.setState({alertVisible: false, data: data});

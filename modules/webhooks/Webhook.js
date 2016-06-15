@@ -1,5 +1,6 @@
 import React from 'react'
 import WebhookEditor from './WebhookEditor'
+import shared from '../../SharedConsts'
 
 var Webhook = React.createClass({
 
@@ -16,13 +17,26 @@ var Webhook = React.createClass({
   },
   onEditClick: function () {
     {
-      this.state.showEditor ? document.getElementById('editWebhook'+this.props.tid).innerHTML = 'Edit' : document.getElementById('editWebhook'+this.props.tid).innerHTML = 'Exit Editing';
+      this.state.showEditor ? document.getElementById('editWebhook' + this.props.tid).innerHTML = 'Edit' : document.getElementById('editWebhook' + this.props.tid).innerHTML = 'Exit Editing';
     }
     this.setState({showEditor: !this.state.showEditor});
   },
   onDeleteClick: function () {
     return (
-      alert('Not implemented yet')
+//      alert('Not implemented yet: '+this.props.tid)
+      $.ajax({
+        type: 'DELETE',
+        url: '/' + shared.bePath + '/webhook/' + this.props.tid,
+        datatype: 'json',
+        cache: false,
+        headers: {'Authorization': 'Bearer ' + shared.apiToken},
+        success: function (data) {
+          console.log('Body: ' + JSON.stringify(data));
+        }.bind(this),
+        error: function (xhr, status, err) {
+          console.error(xhr.url, status, err.toString());
+        }.bind(this)
+      })
     );
   },
   render: function () {
@@ -31,7 +45,9 @@ var Webhook = React.createClass({
         <b>Datasource:</b> {this.props.datasource}&nbsp;<b>Event:</b> {this.props.event}
         <br/><b>URL:</b> {this.props.hookUrl}<br/>
         { this.state.showEditor ? <WebhookEditor tsField={this.props.tsField}/> : null }
-        <button className='btn btn-primary' id={'editWebhook'+this.props.tid} type='button' onClick={this.onEditClick}>Edit</button>
+        <button className='btn btn-primary' id={'editWebhook'+this.props.tid} type='button' onClick={this.onEditClick}>
+          Edit
+        </button>
         &nbsp;
         <button className='btn btn-danger' id={'deleteWebhook'+this.props.tid} type='button'
                 onClick={this.onDeleteClick}>Delete
