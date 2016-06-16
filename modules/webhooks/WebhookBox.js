@@ -28,22 +28,25 @@ var WebhookBox = React.createClass({
     window.addEventListener('whDeleteEvent', this.handleDeleteRequest);
     this.listWebhooks();
   },
+  //close general error message (bad credentials, no connection, etc.)
   handleAlertDismiss() {
     this.setState({alertVisible: false});
   },
+  //start handling webhook deletion - when Delete button pressed in Webhook object
   handleDeleteRequest(evt){
     console.log('Webhook deletion request: ' + evt.detail.props);
     this.setState({confirmDelete: evt.detail});
   },
+  //handle final decision - should the webhook be deleted or not
   handleDeleteConfirmationDismiss(shouldDelete) {
     console.log('delete confirmation dismissed while shouldDelete is ' + shouldDelete);
-
     if (shouldDelete) {
       this.deleteWebhook();
     } else {
       this.setState({confirmDelete: {}});
     }
   },
+  //ajax call to delete the webhook
   deleteWebhook() {
     var whdel = this.state.confirmDelete;
     $.ajax({
@@ -61,6 +64,7 @@ var WebhookBox = React.createClass({
       }.bind(this)
     });
   },
+  //display all existing webhooks (for the authorized tenant)
   listWebhooks() {
     $.ajax({
       type: 'GET',
@@ -85,6 +89,7 @@ var WebhookBox = React.createClass({
   },
   render: function () {
     console.log('Rendering Webhook Box...');
+    //show general error message in case of problem (credentials, connectivity,...)
     if (this.state.alertVisible) {
       return (
         <div className="tokenBox">
@@ -100,10 +105,11 @@ var WebhookBox = React.createClass({
       return (
         <div className="tokenBox">
           <h2>Webhooks:</h2>
-          <Alert bsStyle="danger" >
-            <h4>Your are going to delete </h4>
-            <Button onClick={this.handleDeleteConfirmationDismiss.bind(null, true)}>Yes, delete!</Button>
-            <Button onClick={this.handleDeleteConfirmationDismiss.bind(null, false)}>No, stop it!</Button>
+          <Alert bsStyle="warning" >
+            <h4>Your are going to delete webhook for <b>{this.state.confirmDelete.props.event}</b> event of <b>{this.state.confirmDelete.props.datasource}</b></h4>
+            <h4>This action is not recoverable. Are you sure?</h4>
+            <Button onClick={this.handleDeleteConfirmationDismiss.bind(null, true)}>Yes, delete it!</Button>
+            <Button onClick={this.handleDeleteConfirmationDismiss.bind(null, false)}>No, keep this one!</Button>
           </Alert>
         </div>
       )
