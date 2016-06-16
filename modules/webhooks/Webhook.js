@@ -22,7 +22,7 @@ var Webhook = React.createClass({
     this.setState({showEditor: !this.state.showEditor});
   },
   onDeleteClick: function () {
-    var event = new CustomEvent('whDeleteEvent', {'detail': this.props.tid});
+    var event = new CustomEvent('whDeleteEvent', {'detail': this});
     window.dispatchEvent(event);
   },
   render: function () {
