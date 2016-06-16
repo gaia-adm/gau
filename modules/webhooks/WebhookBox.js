@@ -93,7 +93,7 @@ var WebhookBox = React.createClass({
     if (this.state.alertVisible) {
       return (
         <div className="tokenBox">
-          <h2>Webhooks:</h2>
+          <h2 style={{"text-align": "center", "background-color": "#e7e7e7", "color": "#003366"}}>Webhooks</h2>
           <Alert bsStyle="danger" onDismiss={this.handleAlertDismiss}>
             <div style={{"text-align": "center"}}>
               <h4>Error occurred - {this.state.errorMessage}</h4>
@@ -106,7 +106,7 @@ var WebhookBox = React.createClass({
     if (Object.keys(this.state.confirmDelete).length) {
       return (
         <div className="tokenBox">
-          <h2>Webhooks:</h2>
+          <h2 style={{"text-align": "center", "background-color": "#e7e7e7", "color": "#003366"}}>Webhooks</h2>
           <Alert bsStyle="warning">
             <div style={{"text-align": "center"}}>
               <h4>Your are going to delete webhook configuration for <b>{this.state.confirmDelete.props.event}</b> event
@@ -122,7 +122,9 @@ var WebhookBox = React.createClass({
     } else {
       return (
         <div className="tokenBox">
-          <h2>Webhooks:</h2>
+          <h2 style={{"text-align": "center", "background-color": "#e7e7e7", "color": "#003366"}}>Webhooks</h2>
+          <Button bsStyle="info" bsSize="large" >Register new webhook configuration...</Button>
+          <p/>
           <WebhookList data={this.state.data}/>
         </div>
       )
