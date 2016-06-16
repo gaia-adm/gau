@@ -22,22 +22,8 @@ var Webhook = React.createClass({
     this.setState({showEditor: !this.state.showEditor});
   },
   onDeleteClick: function () {
-    return (
-//      alert('Not implemented yet: '+this.props.tid)
-      $.ajax({
-        type: 'DELETE',
-        url: '/' + shared.bePath + '/webhook/' + this.props.tid,
-        datatype: 'json',
-        cache: false,
-        headers: {'Authorization': 'Bearer ' + shared.apiToken},
-        success: function (data) {
-          console.log('Body: ' + JSON.stringify(data));
-        }.bind(this),
-        error: function (xhr, status, err) {
-          console.error(xhr.url, status, err.toString());
-        }.bind(this)
-      })
-    );
+    var event = new CustomEvent('whDeleteEvent', {'detail': this.props.tid});
+    window.dispatchEvent(event);
   },
   render: function () {
     return (

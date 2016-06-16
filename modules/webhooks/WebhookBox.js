@@ -24,24 +24,48 @@ var WebhookBox = React.createClass({
 
   componentDidMount() {
     console.log('mounted');
-    $.ajax({
-      type: 'GET',
-      url: '/'+shared.bePath+'/webhook',
-      datatype: 'json',
-      cache: false,
-      headers: {'Authorization': 'Bearer '+shared.apiToken},
-      success: function (data) {
-        console.log('Body: ' + JSON.stringify(data));
-        this.setState({alertVisible: false, data: data});
-      }.bind(this),
-      error: function (xhr, status, err) {
-        console.error(xhr.url, status, err.toString());
-        this.setState({alertVisible: true, data: [], errorMessage: err.toString()+' (Reason: ' + (xhr.responseJSON ? xhr.responseJSON.message : 'unkonwn') +')' });
-      }.bind(this)
-    });
+    window.addEventListener('whDeleteEvent', this.deleteWebhook);
+    this.listWebhooks();
   },
   handleAlertDismiss() {
     this.setState({alertVisible: false});
+  },
+  deleteWebhook(evt) {
+    $.ajax({
+      type: 'DELETE',
+      url: '/' + shared.bePath + '/webhook/' + evt.detail,
+      datatype: 'json',
+      cache: false,
+      headers: {'Authorization': 'Bearer ' + shared.apiToken},
+      success: function () {
+        console.log('Webhook deleted: ' + evt.detail);
+        this.listWebhooks();
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.error(xhr.url, status, err.toString());
+      }.bind(this)
+    });
+  },
+  listWebhooks() {
+    $.ajax({
+    type: 'GET',
+    url: '/' + shared.bePath + '/webhook',
+    datatype: 'json',
+    cache: false,
+    headers: {'Authorization': 'Bearer ' + shared.apiToken},
+    success: function (data) {
+      console.log('Body: ' + JSON.stringify(data));
+      this.setState({alertVisible: false, data: data});
+    }.bind(this),
+    error: function (xhr, status, err) {
+      console.error(xhr.url, status, err.toString());
+      this.setState({
+        alertVisible: true,
+        data: [],
+        errorMessage: err.toString() + ' (Reason: ' + (xhr.responseJSON ? xhr.responseJSON.message : 'unkonwn') + ')'
+      });
+    }.bind(this)
+  });
   },
   render: function () {
     if (this.state.alertVisible) {
