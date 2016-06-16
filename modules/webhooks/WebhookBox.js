@@ -38,8 +38,13 @@ var WebhookBox = React.createClass({
   },
   //start handling webhook create request
   handleCreateRequest(evt){
-    console.log('Going to create event: ' + JSON.stringify(evt.detail));
-    this.createWebhook(evt.detail);
+    if(Object.keys(evt.detail).length>0){
+      console.log('Going to create event: ' + JSON.stringify(evt.detail));
+      this.createWebhook(evt.detail);
+    } else {
+      this.setState({action: ''});
+    }
+
   },
   //start handling webhook deletion - when Delete button pressed in Webhook object
   handleDeleteRequest(evt){
