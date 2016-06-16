@@ -1,6 +1,5 @@
 import React from 'react'
 import WebhookEditor from './WebhookEditor'
-import shared from '../../SharedConsts'
 
 var Webhook = React.createClass({
 
