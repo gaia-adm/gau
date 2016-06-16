@@ -38,7 +38,7 @@ var WebhookBox = React.createClass({
   },
   //start handling webhook create request
   handleCreateRequest(evt){
-    if(Object.keys(evt.detail).length>0){
+    if (Object.keys(evt.detail).length > 0) {
       console.log('Going to create event: ' + JSON.stringify(evt.detail));
       this.createWebhook(evt.detail);
     } else {
@@ -151,9 +151,8 @@ var WebhookBox = React.createClass({
           <div className="tokenBox">
             <Alert bsStyle="warning">
               <div style={{"textAlign": "center"}}>
-                <h4>Your are going to delete webhook configuration for <b>{this.state.confirmDelete.props.event}</b>
-                  event
-                  of <b>{this.state.confirmDelete.props.datasource}</b></h4>
+                <h4>Your are going to delete webhook configuration for <b>{this.state.confirmDelete.props.event} </b>
+                  event of <b>{this.state.confirmDelete.props.datasource}</b>.</h4>
                 <h4>This action is not recoverable - you will not be able to send these events to Gaia anymore.</h4>
                 <h4>Are you sure?</h4>
                 <Button onClick={this.handleDeleteConfirmationDismiss.bind(null, true)}>Yes, delete it!</Button>
