@@ -29,6 +29,7 @@ var WebhookBox = React.createClass({
     console.log('mounted');
     window.addEventListener('whDeleteEvent', this.handleDeleteRequest);
     window.addEventListener('whCreateEvent', this.handleCreateRequest);
+    window.addEventListener('whUpdateEvent', this.handleUpdateRequest);
     this.listWebhooks();
   },
 
@@ -44,7 +45,15 @@ var WebhookBox = React.createClass({
     } else {
       this.setState({action: ''});
     }
-
+  },
+  //start handling webhook create request that serves as update too
+  handleUpdateRequest(evt){
+    if (Object.keys(evt.detail).length > 0) {
+      console.log('Going to update event: ' + JSON.stringify(evt.detail));
+      this.createWebhook(evt.detail);
+    } else {
+      this.setState({action: ''});
+    }
   },
   //start handling webhook deletion - when Delete button pressed in Webhook object
   handleDeleteRequest(evt){

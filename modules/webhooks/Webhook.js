@@ -29,7 +29,7 @@ var Webhook = React.createClass({
       <div className='token'>
         <b>Datasource:</b> {this.props.datasource}&nbsp;<b>Event:</b> {this.props.event}
         <br/><b>URL:</b> {this.props.hookUrl}<br/>
-        { this.state.showEditor ? <WebhookEditor tsField={this.props.tsField}/> : null }
+        { this.state.showEditor ? <WebhookEditor tsField={this.props.tsField} datasource={this.props.datasource} event={this.props.event} /> : null }
         <button className='btn btn-primary' id={'editWebhook'+this.props.tid} type='button' onClick={this.onEditClick}>
           Edit
         </button>

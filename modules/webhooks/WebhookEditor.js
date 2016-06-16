@@ -18,9 +18,11 @@ var WebhookEditor = React.createClass({
     }
   },
   onSaveClick: function () {
-    return (
-      alert('Not implemented yet')
-    )
+    var event = new CustomEvent('whUpdateEvent', {'detail': {"datasource": this.props.datasource,"event": this.props.event,"tsField": this.state.tsField}});
+    window.dispatchEvent(event);
+/*    return (
+      alert('Not implemented yet: ' + this.state.tsField+this.props.datasource+this.props.event)
+    )*/
   },
   onCancelClick: function () {
     this.setState({tsField: this.props.tsField, hasChanges: false});
