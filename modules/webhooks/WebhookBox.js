@@ -95,8 +95,10 @@ var WebhookBox = React.createClass({
         <div className="tokenBox">
           <h2>Webhooks:</h2>
           <Alert bsStyle="danger" onDismiss={this.handleAlertDismiss}>
-            <h4>Error occurred - {this.state.errorMessage}</h4>
-            <Button onClick={this.handleAlertDismiss}>Got it!</Button>
+            <div style={{"text-align": "center"}}>
+              <h4>Error occurred - {this.state.errorMessage}</h4>
+              <Button onClick={this.handleAlertDismiss}>Got it!</Button>
+            </div>
           </Alert>
         </div>
       )
@@ -105,11 +107,15 @@ var WebhookBox = React.createClass({
       return (
         <div className="tokenBox">
           <h2>Webhooks:</h2>
-          <Alert bsStyle="warning" >
-            <h4>Your are going to delete webhook for <b>{this.state.confirmDelete.props.event}</b> event of <b>{this.state.confirmDelete.props.datasource}</b></h4>
-            <h4>This action is not recoverable. Are you sure?</h4>
-            <Button onClick={this.handleDeleteConfirmationDismiss.bind(null, true)}>Yes, delete it!</Button>
-            <Button onClick={this.handleDeleteConfirmationDismiss.bind(null, false)}>No, keep this one!</Button>
+          <Alert bsStyle="warning">
+            <div style={{"text-align": "center"}}>
+              <h4>Your are going to delete webhook configuration for <b>{this.state.confirmDelete.props.event}</b> event
+                of <b>{this.state.confirmDelete.props.datasource}</b></h4>
+              <h4>This action is not recoverable - you will not be able to send these events to Gaia anymore.</h4>
+              <h4>Are you sure?</h4>
+              <Button onClick={this.handleDeleteConfirmationDismiss.bind(null, true)}>Yes, delete it!</Button>
+              <Button onClick={this.handleDeleteConfirmationDismiss.bind(null, false)}>No, keep this one!</Button>
+            </div>
           </Alert>
         </div>
       )
