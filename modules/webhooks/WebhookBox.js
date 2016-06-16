@@ -88,6 +88,13 @@ var WebhookBox = React.createClass({
       }.bind(this),
       error: function (xhr, status, err) {
         console.error(xhr.url, status, err.toString());
+        this.setState({
+          alertVisible: true,
+          data: [],
+          confirmDelete: {},
+          action: '',
+          errorMessage: err.toString() + ' (Reason: ' + (xhr.responseJSON ? xhr.responseJSON.message : 'unkonwn') + ')'
+        });
       }.bind(this)
     });
   },
@@ -106,6 +113,13 @@ var WebhookBox = React.createClass({
       }.bind(this),
       error: function (xhr, status, err) {
         console.error(xhr.url, status, err.toString());
+        this.setState({
+          alertVisible: true,
+          data: [],
+          confirmDelete: {},
+          action: '',
+          errorMessage: err.toString() + ' (Reason: ' + (xhr.responseJSON ? xhr.responseJSON.message : 'unkonwn') + ')'
+        });
       }.bind(this)
     });
   },
