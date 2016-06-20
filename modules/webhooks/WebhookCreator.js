@@ -28,15 +28,15 @@ var WebhookCreator = React.createClass({
     var reason = null;
     var patt = new RegExp('^[a-z][a-z-_0-9]+$');
     if (!this.state.datasource || !this.state.event || this.state.datasource.length < 3 || this.state.event.length < 3 || this.state.datasource.length > 20 || this.state.event.length > 20) {
-      reason = 'Bad input provided: datasource and event fields are mandatory and must have 3-20 characters';
+      reason = 'Invalid input provided: datasource and event fields are mandatory and must have 3-20 characters';
       console.log(reason);
       this.setState({invalidInput: reason});
     } else if (this.state.tsField && (this.state.tsField.length < 3 || this.state.tsField.length > 30)) {
-      reason = 'Bad input provided: timestamp field is optional but must have 3-30 characters if provided';
+      reason = 'Invalid input provided: timestamp field is optional but must have 3-30 characters if provided';
       console.log(reason);
       this.setState({invalidInput: reason});
     } else if (!patt.test(this.state.datasource) || !patt.test(this.state.event)) {
-      reason = 'Bad input provided: datasource and event fields must start from lowercase English alphabetic character and contain also dash, underscore or numeric character';
+      reason = 'Invalid input provided: datasource and event fields must start from lowercase English alphabetic character and contain also dash, underscore or numeric character';
       console.log(reason);
       this.setState({invalidInput: reason});
     } else {
