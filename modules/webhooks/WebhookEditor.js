@@ -3,6 +3,8 @@ import React from 'react'
 var WebhookEditor = React.createClass({
 
   propTypes: {
+    datasource: React.PropTypes.string,
+    event: React.PropTypes.string,
     tsField: React.PropTypes.string
   },
 
@@ -18,7 +20,7 @@ var WebhookEditor = React.createClass({
     }
   },
   onSaveClick: function () {
-    var event = new CustomEvent('whUpdateEvent', {'detail': {"datasource": this.props.datasource,"event": this.props.event,"tsField": this.state.tsField}});
+    var event = new CustomEvent('whUpdateEvent', {'detail': {'datasource': this.props.datasource,'event': this.props.event,'tsField': this.state.tsField}});
     window.dispatchEvent(event);
 /*    return (
       alert('Not implemented yet: ' + this.state.tsField+this.props.datasource+this.props.event)
@@ -32,17 +34,17 @@ var WebhookEditor = React.createClass({
   },
   render: function () {
     return (
-      <div className="tokenEditor">
+      <div className='tokenEditor'>
 
 
-        <b>Timestamp field: </b> <input type="text" size="50" onChange={this.onChange}
+        <b>Timestamp field: </b> <input type='text' size='50' onChange={this.onChange}
                                         value={this.state.tsField}></input>&nbsp;
 
         {this.state.hasChanges ?
-          <button className="btn btn-sm btn-primary" id="saveWebhook" type="button" onClick={this.onSaveClick}>
+          <button className='btn btn-sm btn-primary' id='saveWebhook' type='button' onClick={this.onSaveClick}>
             Save </button> : null}&nbsp;
         {this.state.hasChanges ?
-          <button className="btn btn-sm btn-warning" id="notSaveWebhook" type="button" onClick={this.onCancelClick}>
+          <button className='btn btn-sm btn-warning' id='notSaveWebhook' type='button' onClick={this.onCancelClick}>
             Cancel </button> : null}&nbsp;
         <br/>
       </div>

@@ -124,7 +124,7 @@ var WebhookBox = React.createClass({
     });
   },
   //ajax call to display all existing webhooks (for the authorized tenant)
-  //it also reset all "special" states - confirmDelete in deletion flow, action in create flow
+  //it also reset all 'special' states - confirmDelete in deletion flow, action in create flow
   listWebhooks() {
     $.ajax({
       type: 'GET',
@@ -154,10 +154,10 @@ var WebhookBox = React.createClass({
     if (this.state.alertVisible) {
       return (
         <div>
-          <h2 style={{"textAlign": "center", "backgroundColor": "#e7e7e7", "color": "#003366"}}>Webhooks</h2>
-          <div className="tokenBox">
-            <Alert bsStyle="danger" onDismiss={this.handleAlertDismiss}>
-              <div style={{"textAlign": "center"}}>
+          <h2 style={{'textAlign': 'center', 'backgroundColor': '#e7e7e7', 'color': '#003366'}}>Webhooks</h2>
+          <div className='tokenBox'>
+            <Alert bsStyle='danger' onDismiss={this.handleAlertDismiss}>
+              <div style={{'textAlign': 'center'}}>
                 <h4>Error occurred - {this.state.errorMessage}</h4>
                 <Button onClick={this.handleAlertDismiss}>Got it!</Button>
               </div>
@@ -170,10 +170,10 @@ var WebhookBox = React.createClass({
     if (Object.keys(this.state.confirmDelete).length) {
       return (
         <div>
-          <h2 style={{"textAlign": "center", "backgroundColor": "#e7e7e7", "color": "#003366"}}>Webhooks</h2>
-          <div className="tokenBox">
-            <Alert bsStyle="warning">
-              <div style={{"textAlign": "center"}}>
+          <h2 style={{'textAlign': 'center', 'backgroundColor': '#e7e7e7', 'color': '#003366'}}>Webhooks</h2>
+          <div className='tokenBox'>
+            <Alert bsStyle='warning'>
+              <div style={{'textAlign': 'center'}}>
                 <h4>Your are going to delete webhook configuration for <b>{this.state.confirmDelete.props.event} </b>
                   event of <b>{this.state.confirmDelete.props.datasource}</b>.</h4>
                 <h4>This action is not recoverable - you will not be able to send these events to Gaia anymore.</h4>
@@ -191,8 +191,8 @@ var WebhookBox = React.createClass({
       console.log('creating...')
       return (
         <div>
-          <h2 style={{"textAlign": "center", "backgroundColor": "#e7e7e7", "color": "#003366"}}>Webhooks</h2>
-          <div className="tokenBox">
+          <h2 style={{'textAlign': 'center', 'backgroundColor': '#e7e7e7', 'color': '#003366'}}>Webhooks</h2>
+          <div className='tokenBox'>
             <WebhookCreator />
           </div>
         </div>
@@ -201,9 +201,9 @@ var WebhookBox = React.createClass({
     //Regular webhooks list
     return (
       <div>
-        <h2 style={{"textAlign": "center", "backgroundColor": "#e7e7e7", "color": "#003366"}}>Webhooks</h2>
-        <div className="tokenBox">
-          <Button bsStyle="info" bsSize="large" onClick={this.handleCreateButtonPressed}>Register new webhook
+        <h2 style={{'textAlign': 'center', 'backgroundColor': '#e7e7e7', 'color': '#003366'}}>Webhooks</h2>
+        <div className='tokenBox'>
+          <Button bsStyle='info' bsSize='large' onClick={this.handleCreateButtonPressed}>Register new webhook
             configuration...</Button>
           <p/>
           <WebhookList data={this.state.data}/>

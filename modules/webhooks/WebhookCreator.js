@@ -26,7 +26,7 @@ var WebhookCreator = React.createClass({
   },
   validatePayload: function () {
     var reason = null;
-    var patt = new RegExp("^[a-z][a-z-_0-9]+$");
+    var patt = new RegExp('^[a-z][a-z-_0-9]+$');
     if (!this.state.datasource || !this.state.event || this.state.datasource.length < 3 || this.state.event.length < 3 || this.state.datasource.length > 20 || this.state.event.length > 20) {
       reason = 'Bad input provided: datasource and event fields are mandatory and must have 3-20 characters';
       console.log(reason);
@@ -41,9 +41,9 @@ var WebhookCreator = React.createClass({
       this.setState({invalidInput: reason});
     } else {
       this.onCreateStandardClick({
-        "datasource": this.state.datasource,
-        "event": this.state.event,
-        "tsField": this.state.tsField
+        'datasource': this.state.datasource,
+        'event': this.state.event,
+        'tsField': this.state.tsField
       })
     }
   },
@@ -61,9 +61,9 @@ var WebhookCreator = React.createClass({
   render: function () {
     if (this.state.invalidInput) {
       return (
-        <div class="webhookCreator">
-          <Alert bsStyle="danger">
-            <div style={{"textAlign": "center"}}>
+        <div className='webhookCreator'>
+          <Alert bsStyle='danger'>
+            <div style={{'textAlign': 'center'}}>
               <h4>{this.state.invalidInput}</h4>
               <Button onClick={this.handleAlertDismiss.bind(null, null)}>Got it!</Button>
             </div>
@@ -72,51 +72,51 @@ var WebhookCreator = React.createClass({
       )
     }
     return (
-      <div class="webhookCreator">
-        <h4 style={{"fontStyle": "oblique"}}>Press the button to create standard configuration immediately:</h4><p/>
-        <Button bsStyle="info" style={{"marginLeft": "10px"}}
-                onClick={this.onCreateStandardClick.bind(null, {"datasource": "foo","event": "boo","tsField": "foo.boo"})}>Foo
+      <div className='webhookCreator'>
+        <h4 style={{'fontStyle': 'oblique'}}>Press the button to create standard configuration immediately:</h4><p/>
+        <Button bsStyle='info' style={{'marginLeft': '10px'}}
+                onClick={this.onCreateStandardClick.bind(null, {'datasource': 'foo','event': 'boo','tsField': 'foo.boo'})}>Foo
           (boo)</Button>
-        <Button bsStyle="info" style={{"marginLeft": "10px"}}
-                onClick={this.onCreateStandardClick.bind(null, {"datasource": "github","event": "push","tsField": "repository.pushed_at"})}>Github
+        <Button bsStyle='info' style={{'marginLeft': '10px'}}
+                onClick={this.onCreateStandardClick.bind(null, {'datasource': 'github','event': 'push','tsField': 'repository.pushed_at'})}>Github
           (push)</Button>
-        <Button bsStyle="info" style={{"marginLeft": "10px"}}
-                onClick={this.onCreateStandardClick.bind(null, {"datasource": "trello","event": "management","tsField": "repository.pushed_at"})}>Trello
+        <Button bsStyle='info' style={{'marginLeft': '10px'}}
+                onClick={this.onCreateStandardClick.bind(null, {'datasource': 'trello','event': 'management','tsField': 'repository.pushed_at'})}>Trello
           (any)</Button>
         <p/>
-        <h4 style={{"fontStyle": "oblique"}}>Or create custom configuration:</h4>
-        <div style={{"marginLeft": "10px"}}>
+        <h4 style={{'fontStyle': 'oblique'}}>Or create custom configuration:</h4>
+        <div style={{'marginLeft': '10px'}}>
           <Form horizontal>
-            <FormGroup controlId="datasource">
-              <Col componentClass={ControlLabel} sm={1} style={{"textAlign": "left"}}>Datasource</Col>
-              <Col sm={10}><FormControl type="text" value={this.state.datasource}
-                                        placeholder="Enter datasource (for example, stash)"
+            <FormGroup controlId='datasource'>
+              <Col componentClass={ControlLabel} sm={1} style={{'textAlign': 'left'}}>Datasource</Col>
+              <Col sm={10}><FormControl type='text' value={this.state.datasource}
+                                        placeholder='Enter datasource (for example, stash)'
                                         onChange={this.handleDatasourceValue}/></Col>
             </FormGroup>
-            <FormGroup controlId="event">
-              <Col componentClass={ControlLabel} sm={1} style={{"textAlign": "left"}}>Event</Col>
-              <Col sm={10}><FormControl type="text" value={this.state.event}
-                                        placeholder="Enter event (for example, push)"
+            <FormGroup controlId='event'>
+              <Col componentClass={ControlLabel} sm={1} style={{'textAlign': 'left'}}>Event</Col>
+              <Col sm={10}><FormControl type='text' value={this.state.event}
+                                        placeholder='Enter event (for example, push)'
                                         onChange={this.handleEventValue}/></Col>
             </FormGroup>
-            <FormGroup controlId="tsField">
-              <Col componentClass={ControlLabel} sm={1} style={{"textAlign": "left"}}>Timestamp field</Col>
-              <Col sm={10}><FormControl type="text" value={this.state.tsField}
-                                        placeholder="Optional - enter timestamp field (for example, changesets.values[0].toCommit.authorTimestamp)"
+            <FormGroup controlId='tsField'>
+              <Col componentClass={ControlLabel} sm={1} style={{'textAlign': 'left'}}>Timestamp field</Col>
+              <Col sm={10}><FormControl type='text' value={this.state.tsField}
+                                        placeholder='Optional - enter timestamp field (for example, changesets.values[0].toCommit.authorTimestamp)'
                                         onChange={this.handleTimestampValue}/></Col>
             </FormGroup>
-            <Button bsStyle="warning" type="reset">
+            <Button bsStyle='warning' type='reset'>
               Reset
             </Button>
-            <Button bsStyle="info" type="button" style={{"marginLeft": "10px"}}
+            <Button bsStyle='info' type='button' style={{'marginLeft': '10px'}}
                     onClick={this.validatePayload.bind(null, this)}>
               Submit
             </Button>
           </Form>
         </div>
         <p/>
-        <h4 style={{"fontStyle": "oblique"}}>Exit creation mode</h4>
-        <Button bsStyle="info" style={{"marginLeft": "10px"}}
+        <h4 style={{'fontStyle': 'oblique'}}>Exit creation mode</h4>
+        <Button bsStyle='info' style={{'marginLeft': '10px'}}
                 onClick={this.onCreateStandardClick.bind(null, {})}>Back</Button>
       </div>
     );

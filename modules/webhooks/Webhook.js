@@ -1,4 +1,5 @@
 import React from 'react'
+import {Button} from 'react-bootstrap'
 import WebhookEditor from './WebhookEditor'
 
 var Webhook = React.createClass({
@@ -26,17 +27,17 @@ var Webhook = React.createClass({
   },
   render: function () {
     return (
-      <div className='token'>
+      <div className='token' refs='aaa'>
         <b>Datasource:</b> {this.props.datasource}&nbsp;<b>Event:</b> {this.props.event}
         <br/><b>URL:</b> {this.props.hookUrl}<br/>
         { this.state.showEditor ? <WebhookEditor tsField={this.props.tsField} datasource={this.props.datasource} event={this.props.event} /> : null }
-        <button className='btn btn-primary' id={'editWebhook'+this.props.tid} type='button' onClick={this.onEditClick}>
+        <Button className='btn btn-primary' id={'editWebhook'+this.props.tid} type='button' onClick={this.onEditClick}>
           Edit
-        </button>
+        </Button>
         &nbsp;
-        <button className='btn btn-danger' id={'deleteWebhook'+this.props.tid} type='button'
+        <Button className='btn btn-danger' id={'deleteWebhook'+this.props.tid} type='button'
                 onClick={this.onDeleteClick}>Delete
-        </button>
+        </Button>
         &nbsp;
         <p/>
       </div>
