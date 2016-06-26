@@ -31,7 +31,7 @@ routerWHC.get('/' + bePath + '/webhook', function (req, res) {
     res.status(HttpStatus.UNAUTHORIZED).send();
   } else {
     var options = {
-      url: 'http://' + serverName + '/wh/config/',
+      url: 'http://webhook.' + serverName + '/wh/config/',
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ routerWHC.post('/' + bePath + '/webhook', function (req, res) {
     res.status(HttpStatus.UNAUTHORIZED).send();
   } else {
     var options = {
-      url: 'http://' + serverName + '/wh/config/',
+      url: 'http://webhook.' + serverName + '/wh/config/',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -100,7 +100,7 @@ routerWHC.delete('/' + bePath + '/webhook/:id', function (req, res) {
       res.status(HttpStatus.BAD_REQUEST).json({message: 'webhook id is missing'});
     };
     var options = {
-      url: 'http://' + serverName + '/wh/config/'+req.params.id,
+      url: 'http://webhook.' + serverName + '/wh/config/'+req.params.id,
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
