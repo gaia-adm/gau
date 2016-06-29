@@ -1,42 +1,45 @@
 'use strict';
 
 var express = require('express');
-var routerWHC = express.Router();
+var cookieParser = require('cookie-parser')
+var routerATC = express.Router();
 var HttpStatus = require('http-status-codes');
 var request = require('request');
 var bePath = require('../SharedConsts').bePath;
 
 require('request').debug = false;
 
+express().use(cookieParser);
+
 var serverName = process.env.SRV_DNS;
 
 
 //for testing
-routerWHC.use('/' + bePath + '/*', function (req, res, next) {
-  console.log('Got ' + req.method + ' request to backend: ' + req.protocol + '://' + req.get('host') + req.originalUrl);
+routerATC.use('/' + bePath + '/*', function (req, res, next) {
+  console.log('Got ' + req.method + ' request to backend: ' + req.originalUrl);
   next();
 });
 //for testing
-routerWHC.get('/' + bePath + '/hello/:user?', function (req, res) {
+routerATC.get('/' + bePath + '/hello/:user?', function (req, res) {
   var user = req.params.user ? req.params.user : 'nobody';
   console.log('Send greetings to ' + user);
   res.status(HttpStatus.OK).json({message: 'Hello, ' + user});
 });
 
-//get all webhooks for the tenant
-routerWHC.get('/' + bePath + '/webhook', function (req, res) {
-  var token = req.get('Authorization');
-  if (!token) {
+//get my api token, if exists
+routerATC.get('/' + bePath + '/apitoken', function (req, res) {
+  console.log("COOKIES: "+req.cookies);
+  if (false) {
     console.log('Unauthorized request to ' + req.originalUrl);
     res.status(HttpStatus.UNAUTHORIZED).send();
   } else {
     var options = {
-      url: 'http://webhook.' + serverName + '/wh/config/',
+      url: 'http://webhook.' + serverName + '/sts/facade/getmyapitoken/',
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': token
+        'Set-Cookie': token
       }
     };
     request.get(options, function (err, resRemote, body) {
