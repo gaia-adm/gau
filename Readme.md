@@ -1,1 +1,3 @@
-check it out!
+process.env.SRV_DNS
+process.env.WH_SUBDOMAIN
+
