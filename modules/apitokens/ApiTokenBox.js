@@ -1,5 +1,6 @@
 import React from 'react'
 import {Button} from 'react-bootstrap'
+import shared from '../../SharedConsts'
 
 var ApiTokenBox = React.createClass({
 
@@ -20,7 +21,7 @@ var ApiTokenBox = React.createClass({
   getMyToken() {
     $.ajax({
       type: 'GET',
-      url: '/' + shared.bePath + '/token',
+      url: '/' + shared.bePath + '/apitoken',
       datatype: 'json',
       cache: false,
       success: function (data) {
@@ -44,10 +45,8 @@ var ApiTokenBox = React.createClass({
         <h2 style={{'textAlign': 'center', 'backgroundColor': '#e7e7e7', 'color': '#003366'}}>API Token</h2>
         <div className='tokenBox'>
           <p>TOKEN: {this.state.token}</p>
-          {/*          <Button bsStyle='info' bsSize='large' onClick={this.handleCreateButtonPressed}>Register new webhook
-            configuration...</Button>
+          <Button bsStyle='info' bsSize='large' onClick={this.getMyToken()}>GetMyToken</Button>
           <p/>
-          <WebhookList data={this.state.data}/>*/}
         </div>
       </div>
     )

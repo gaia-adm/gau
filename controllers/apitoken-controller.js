@@ -39,7 +39,7 @@ routerATC.get('/' + bePath + '/apitoken', function (req, res) {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Set-Cookie': token
+        'Cookie': "gaia.it="+''
       }
     };
     request.get(options, function (err, resRemote, body) {
@@ -58,72 +58,5 @@ routerATC.get('/' + bePath + '/apitoken', function (req, res) {
   }
 });
 
-//create new webhook
-routerWHC.post('/' + bePath + '/webhook', function (req, res) {
-  var token = req.get('Authorization');
-  if (!token) {
-    console.log('Unauthorized request to ' + req.originalUrl);
-    res.status(HttpStatus.UNAUTHORIZED).send();
-  } else {
-    var options = {
-      url: 'http://webhook.' + serverName + '/wh/config/',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': token
-      },
-      json: req.body
-    };
 
-    request.post(options, function (err, resRemote, body) {
-      if (err) {
-        res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({message: err.message});
-      } else {
-        if (resRemote.statusCode != HttpStatus.OK) {
-          console.log('Error: ' + resRemote.statusMessage + '; called ' + options.url);
-          res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({message: resRemote.statusMessage});
-        } else {
-          console.log('Webhooks list received: ' + JSON.stringify(body));
-          res.status(HttpStatus.CREATED).json(body);
-        }
-      }
-    });
-  }
-});
-
-//delete webhook by id
-routerWHC.delete('/' + bePath + '/webhook/:id', function (req, res) {
-  var token = req.get('Authorization');
-  if (!token) {
-    console.log('Unauthorized request to ' + req.originalUrl);
-    res.status(HttpStatus.UNAUTHORIZED).send();
-  } else {
-    if(!req.params.id){
-      res.status(HttpStatus.BAD_REQUEST).json({message: 'webhook id is missing'});
-    };
-    var options = {
-      url: 'http://webhook.' + serverName + '/wh/config/'+req.params.id,
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': token
-      }
-    };
-    request.delete(options, function (err, resRemote, body) {
-      if (err) {
-        res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({message: err.message});
-      } else {
-        if (resRemote.statusCode != HttpStatus.NO_CONTENT) {
-          console.log('Error: ' + resRemote.statusMessage+'; called ' + options.url);
-          res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({message: resRemote.statusMessage});
-        } else {
-          res.status(HttpStatus.NO_CONTENT).send();
-        }
-      }
-    });
-  }
-});
-
-module.exports = routerWHC;
+module.exports = routerATC;
