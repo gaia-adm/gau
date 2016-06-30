@@ -2,6 +2,7 @@
 
 var express = require('express');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 var path = require('path');
 var log4js = require('log4js');
 
@@ -21,6 +22,7 @@ app.set('port', (process.env.PORT || 4000));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(cookieParser());
 
 var uiPath = require('./SharedConsts').uiPath;
 app.use(require('./controllers/webhook-controller'));

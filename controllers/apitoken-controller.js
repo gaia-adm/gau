@@ -1,7 +1,6 @@
 'use strict';
 
 var express = require('express');
-var cookieParser = require('cookie-parser')
 var routerATC = express.Router();
 var HttpStatus = require('http-status-codes');
 var request = require('request');
@@ -9,7 +8,7 @@ var bePath = require('../SharedConsts').bePath;
 
 require('request').debug = false;
 
-express().use(cookieParser);
+
 
 var serverName = process.env.SRV_DNS;
 var subdomain = process.env.WH_SUBDOMAIN ? process.env.WH_SUBDOMAIN : ''; //webhook.
