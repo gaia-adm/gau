@@ -51,12 +51,16 @@ var ApiTokenBox = React.createClass({
     });
   },
 
+  revokeMyToken() {
+    alert('Not implemented yet');
+  },
+
   createMarkup() {
     var infoString;
     if (this.state.token && this.state.createdAt) {
       infoString = "<p><b>API token: </b>" + this.state.token + "</p><p><b>Created at: </b>" + this.state.createdAt + "</p>"
     } else if (this.state.errorMessage) {
-      infoString = "<p>API token is not available, the last error happened: "+this.state.errorMessage+"</p><p>Please press <b>'Get My Token'</b> button below in order to obtain the token</p>";
+      infoString = "<p>API token is not available, the last error happened: "+this.state.errorMessage+"</p><p>Please press <b>'Get My API Token'</b> button below in order to obtain the token</p>";
     } else {
       infoString = "<p>API token is not available, please press <b>'Get My Token'</b> button below in order to obtain the token</p>";
     }
@@ -69,7 +73,8 @@ var ApiTokenBox = React.createClass({
         <h2 style={{'textAlign': 'center', 'backgroundColor': '#e7e7e7', 'color': '#003366'}}>API Token</h2>
         <div className='tokenBox'>
           <div dangerouslySetInnerHTML={this.createMarkup()}/>
-          <Button bsStyle='info' bsSize='large' onClick={this.getMyToken}>GetMyToken</Button>
+          <Button bsStyle='info' bsSize='large' onClick={this.getMyToken}>Get My API Token</Button>&nbsp;
+          <Button bsStyle='danger' bsSize='large' onClick={this.revokeMyToken}>Revoke API Token</Button>&nbsp;
           <p/>
         </div>
       </div>
