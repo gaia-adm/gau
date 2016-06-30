@@ -12,6 +12,8 @@ require('request').debug = false;
 express().use(cookieParser);
 
 var serverName = process.env.SRV_DNS;
+var subdomain = process.env.WH_SUBDOMAIN ? process.env.WH_SUBDOMAIN : ''; //webhook.
+var port = subdomain ? '' : ':88';
 
 
 //for testing
@@ -34,7 +36,7 @@ routerATC.get('/' + bePath + '/apitoken', function (req, res) {
     res.status(HttpStatus.UNAUTHORIZED).send();
   } else {
     var options = {
-      url: 'http://webhook.' + serverName + '/sts/facade/getmyapitoken/',
+      url: 'http://' + subdomain + serverName + port + '/sts/facade/getmyapitoken/',
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
