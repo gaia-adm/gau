@@ -29,7 +29,8 @@ routerATC.get('/' + bePath + '/hello/:user?', function (req, res) {
 
 //get my api token, if exists
 routerATC.get('/' + bePath + '/apitoken', function (req, res) {
-  console.log("COOKIES: "+req.cookies);
+  var gCookie = req.cookies['gaia.it'];
+  console.log('gaia.it cookie provided:' + gCookie);
   if (false) {
     console.log('Unauthorized request to ' + req.originalUrl);
     res.status(HttpStatus.UNAUTHORIZED).send();
@@ -40,18 +41,19 @@ routerATC.get('/' + bePath + '/apitoken', function (req, res) {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Cookie': "gaia.it="+''
+        'Cookie': "gaia.it="+gCookie
       }
     };
     request.get(options, function (err, resRemote, body) {
       if (err) {
+        //TODO - boris: prevent endless loop, if no cookie provided
         res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({message: err.message});
       } else {
         if (resRemote.statusCode != HttpStatus.OK) {
           console.log('Error: ' + resRemote.statusMessage + '; called ' + options.url);
           res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({message: resRemote.statusMessage});
         } else {
-          console.log('Webhooks list received: ' + body);
+          console.log('API token received: ' + body);
           res.status(HttpStatus.OK).json(JSON.parse(body));
         }
       }

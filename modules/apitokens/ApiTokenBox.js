@@ -26,7 +26,7 @@ var ApiTokenBox = React.createClass({
       cache: false,
       success: function (data) {
         console.log('Body: ' + JSON.stringify(data));
-        sessionStorage.setItem('gaia.at', data);
+        sessionStorage.setItem('gaia.at', JSON.stringify(data));
         this.setState({token: data, errorMessage: ''});
       }.bind(this),
       error: function (xhr, status, err) {
