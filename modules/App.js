@@ -14,8 +14,8 @@ var App = React.createClass({
       <div>
         <ul role="nav">
           <li><Link to={ '/'+shared.uiPath+'/'} onlyActiveOnIndex activeStyle={{ color: 'purple' }}>Home</Link></li>
+          <li><Link to={ '/'+shared.uiPath+'/tokens' } activeStyle={{ color: 'purple' }}>API Token</Link></li>
           <li><Link to={ '/'+shared.uiPath+'/webhooks' } activeStyle={{ color: 'purple' }}>Webhooks</Link></li>
-          <li><Link to={ '/'+shared.uiPath+'/tokens' } activeStyle={{ color: 'purple' }}>Access Tokens</Link></li>
         </ul>
         {this.props.children || <Home/>}
       </div>
