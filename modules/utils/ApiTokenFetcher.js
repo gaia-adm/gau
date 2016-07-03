@@ -5,7 +5,7 @@ import shared from '../../SharedConsts'
  */
 'use strict';
 
-var ApiTokenFetcher = function () {
+var ApiTokenFetcher = function (callback) {
   $.ajax({
     type: 'GET',
     url: '/' + shared.bePath + '/apitoken',
@@ -15,13 +15,13 @@ var ApiTokenFetcher = function () {
       console.log('Body: ' + JSON.stringify(data));
       sessionStorage.setItem('gaia.at.value', data.access_token);
       sessionStorage.setItem('gaia.at.birthday', new Date(Number(data.createdAt)));
-      return null;
+      return callback(null);
     },
     error: function (xhr, status, err) {
       console.error(xhr.url, status, err.toString());
       sessionStorage.removeItem('gaia.at.value');
       sessionStorage.removeItem('gaia.at.birthday');
-      return (err.toString() + ' (Reason: ' + (xhr.responseJSON ? xhr.responseJSON.message : 'unkonwn') + ')');
+      return callback((err.toString() + ' (Reason: ' + (xhr.responseJSON ? xhr.responseJSON.message : 'unkonwn') + ')'));
     }
   });
 

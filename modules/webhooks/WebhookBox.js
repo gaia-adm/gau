@@ -5,6 +5,7 @@ import {Alert, Button} from 'react-bootstrap'
 import shared from '../../SharedConsts'
 import WebhookList from './WebhookList'
 import WebhookCreator from './WebhookCreator'
+import ApiTokenFetcher from '../utils/ApiTokenFetcher'
 
 var WebhookBox = React.createClass({
 
@@ -16,6 +17,9 @@ var WebhookBox = React.createClass({
 
   getInitialState() {
     console.log('Initialize webhook box');
+    if (!sessionStorage.getItem('gaia.at.value')) {
+      this.getMyTokenAjax();
+    }
     return {
       data: [],
       alertVisible: false,
@@ -25,12 +29,29 @@ var WebhookBox = React.createClass({
     }
   },
 
+  getMyTokenAjax() {
+    ApiTokenFetcher(this.handleGetMyTokenAjaxResult);
+  },
+
+  handleGetMyTokenAjaxResult(err){
+    if (err) {
+      console.log('errors in getting API token');
+    } else {
+      console.log('API token is presented');
+    }
+    console.log('Bringing webhooks because the API Token is NOT set');
+    this.listWebhooks();
+  },
+  
   componentDidMount() {
     console.log('mounted');
     window.addEventListener('whDeleteEvent', this.handleDeleteRequest);
     window.addEventListener('whCreateEvent', this.handleCreateRequest);
     window.addEventListener('whUpdateEvent', this.handleUpdateRequest);
-    this.listWebhooks();
+    if (sessionStorage.getItem('gaia.at.value')) {
+      console.log('Bringing webhooks because the API Token is set');
+      this.listWebhooks();
+    }
   },
 
   //close general error message (bad credentials, no connection, etc.)

@@ -30,6 +30,8 @@
     "no-underscore-dangle": 1,
     // Default to single quotes and raise an error if something
     // else is used
-    "quotes": [2, "single"]
+    "quotes": [2, "single"],
+    //allow React dangerouslySetInnerHTML usage
+    "react/no-danger": 0
   }
 }
