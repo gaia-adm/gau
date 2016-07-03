@@ -81,7 +81,7 @@ var WebhookBox = React.createClass({
       url: '/' + shared.bePath + '/webhook/' + whdel.props.tid,
       datatype: 'json',
       cache: false,
-      headers: {'Authorization': 'Bearer ' + shared.apiToken},
+      headers: {'Authorization': 'Bearer ' + sessionStorage.getItem('gaia.at.value')},
       success: function () {
         console.log('Webhook deleted: ' + whdel.props.tid);
         this.listWebhooks();
@@ -106,7 +106,7 @@ var WebhookBox = React.createClass({
       datatype: 'json',
       cache: false,
       data: whConfig,
-      headers: {'Authorization': 'Bearer ' + shared.apiToken},
+      headers: {'Authorization': 'Bearer ' + sessionStorage.getItem('gaia.at.value')},
       success: function () {
         console.log('Webhook created: ' + JSON.stringify(whConfig));
         this.listWebhooks();
@@ -131,7 +131,7 @@ var WebhookBox = React.createClass({
       url: '/' + shared.bePath + '/webhook',
       datatype: 'json',
       cache: false,
-      headers: {'Authorization': 'Bearer ' + shared.apiToken},
+      headers: {'Authorization': 'Bearer ' + sessionStorage.getItem('gaia.at.value')},
       success: function (data) {
         console.log('Body: ' + JSON.stringify(data));
         this.setState({alertVisible: false, data: data, confirmDelete: {}, action: ''});
