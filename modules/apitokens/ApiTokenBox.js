@@ -1,6 +1,7 @@
 import React from 'react'
 import {Button} from 'react-bootstrap'
 import shared from '../../SharedConsts'
+import ApiTokenFetcher from '../utils/ApiTokenFetcher'
 
 var ApiTokenBox = React.createClass({
 
@@ -23,7 +24,25 @@ var ApiTokenBox = React.createClass({
   },
 
   getMyToken() {
-    $.ajax({
+
+    var tokenFetcherErrors = ApiTokenFetcher();
+    //no errors, token is stored in SessionStorage and can be used
+    if(!tokenFetcherErrors){
+      this.setState({
+        token: sessionStorage.getItem('gaia.at.value'),
+        createdAt: sessionStorage.getItem('gaia.at.birthday'),
+        errorMessage: ''
+      });
+    } else {
+      this.setState({
+        token: sessionStorage.getItem('gaia.at.value'),
+        createdAt: sessionStorage.getItem('gaia.at.birthday'),
+        errorMessage: err.toString() + ' (Reason: ' + (xhr.responseJSON ? xhr.responseJSON.message : 'unkonwn') + ')'
+      });
+    }
+
+
+/*    $.ajax({
       type: 'GET',
       url: '/' + shared.bePath + '/apitoken',
       datatype: 'json',
@@ -48,7 +67,7 @@ var ApiTokenBox = React.createClass({
           errorMessage: err.toString() + ' (Reason: ' + (xhr.responseJSON ? xhr.responseJSON.message : 'unkonwn') + ')'
         });
       }.bind(this)
-    });
+    });*/
   },
 
   revokeMyToken() {

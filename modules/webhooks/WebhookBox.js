@@ -15,7 +15,7 @@ var WebhookBox = React.createClass({
   },
 
   getInitialState() {
-    console.log('initialization');
+    console.log('Initialize webhook box');
     return {
       data: [],
       alertVisible: false,
