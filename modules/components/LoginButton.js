@@ -33,10 +33,10 @@ var LoginButton = React.createClass({
       }
     }
   },
-  LogoutStart(){
-    HomeRC.logout(this.LogoutEnd);
+  LoginStart(){
+    HomeRC.login(this.LoginEnd);
   },
-  LogoutEnd(err){
+  LoginEnd(err){
     if(err){
       console.log('Logout failed somehow');
     } else {
@@ -52,7 +52,7 @@ var LoginButton = React.createClass({
 
     return (
       <div>
-        <Button bsStyle="primary" bsSize="large" onClick={this.LogoutStart}>
+        <Button bsStyle="primary" bsSize="large" onClick={this.LoginStart}>
           <div style={loginTextStyle}>Login</div>
         </Button>
       </div>
