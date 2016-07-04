@@ -27,6 +27,7 @@ app.use(cookieParser());
 var uiPath = require('./SharedConsts').uiPath;
 app.use(require('./controllers/webhook-controller'));
 app.use(require('./controllers/apitoken-controller'));
+app.use(require('./controllers/home-controller'))
 
 
 // add trailing slash for just a root context url so that /css will work with catch-all routing below

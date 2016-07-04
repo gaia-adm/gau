@@ -5,3 +5,4 @@
 
 module.exports.uiPath = ('gau');
 module.exports.bePath = ('gab');
+module.exports.atValue = ('gaia.at.value');
