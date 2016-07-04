@@ -33,26 +33,18 @@ var LoginButton = React.createClass({
       }
     }
   },
-  LoginStart(){
-    HomeRC.login(this.LoginEnd);
-  },
-  LoginEnd(err){
-    if(err){
-      console.log('Logout failed somehow');
-    } else {
-      console.log('Completely logged out!')
-      this.setState({
-        loggedIn: false
-      });
-    }
-
+  Login(){
+    this.setState({
+      loggedIn: true
+    });
+    HomeRC.login();
   },
 
   render: function () {
 
     return (
       <div>
-        <Button bsStyle="primary" bsSize="large" onClick={this.LoginStart}>
+        <Button bsStyle="primary" bsSize="large" onClick={this.Login}>
           <div style={loginTextStyle}>Login</div>
         </Button>
       </div>

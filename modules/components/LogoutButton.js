@@ -33,27 +33,18 @@ var LogoutButton = React.createClass({
       }
     }
   },
-  LogoutStart(){
-    HomeRC.logout(this.LogoutEnd);
+  Logout(){
+    this.setState({
+      loggedIn: false
+    });
+    HomeRC.logout();
   },
-  LogoutEnd(err){
-    if(err){
-      console.log('Logout failed somehow');
-    } else {
-      console.log('Completely logged out!')
-      this.setState({
-        loggedIn: false
-      });
-    }
-
-  },
-
 
   render: function () {
 
     return (
       <div>
-        <Button bsStyle="warning" bsSize="large" onClick={this.LogoutStart}><div class={logoutTextStyle}>Logout</div></Button>
+        <Button bsStyle="warning" bsSize="large" onClick={this.Logout}><div style={logoutTextStyle}>Logout</div></Button>
       </div>
     )
   }

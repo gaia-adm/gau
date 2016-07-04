@@ -14,7 +14,7 @@ if (process.env.LOG_LEVEL) {
 }
 var logger = log4js.getLogger('server');
 
-var compression = require('compression')
+var compression = require('compression');
 var app = express();
 // ~3 times difference in bundle download size
 app.use(compression());
@@ -27,7 +27,6 @@ app.use(cookieParser());
 var uiPath = require('./SharedConsts').uiPath;
 app.use(require('./controllers/webhook-controller'));
 app.use(require('./controllers/apitoken-controller'));
-app.use(require('./controllers/home-controller'))
 
 
 // add trailing slash for just a root context url so that /css will work with catch-all routing below
