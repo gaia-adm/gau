@@ -5,7 +5,7 @@ import {Alert, Button} from 'react-bootstrap'
 import shared from '../../SharedConsts'
 import WebhookList from './WebhookList'
 import WebhookCreator from './WebhookCreator'
-import ApiTokenFetcher from '../utils/ApiTokenFetcher'
+import ApiTokenRC from '../utils/ApiTokenRestClient'
 
 var WebhookBox = React.createClass({
 
@@ -30,7 +30,7 @@ var WebhookBox = React.createClass({
   },
 
   getMyTokenAjax() {
-    ApiTokenFetcher(this.handleGetMyTokenAjaxResult);
+    ApiTokenRC.fetch(this.handleGetMyTokenAjaxResult);
   },
 
   handleGetMyTokenAjaxResult(err){

@@ -27,4 +27,29 @@ var ApiTokenFetcher = function (callback) {
 
 };
 
-module.exports = ApiTokenFetcher;
+function ApiTokenRevoker(callback) {
+  var tokenToDelete = sessionStorage.getItem('gaia.at.value');
+  if(!tokenToDelete){
+    console.log('No API Token for the client - nothing to delete');
+    return callback(null);
+  } else {
+    $.ajax({
+      type: 'DELETE',
+      url: '/' + shared.bePath + '/apitoken/'+tokenToDelete,
+      datatype: 'json',
+      cache: false,
+      success: function () {
+        sessionStorage.removeItem('gaia.at.value');
+        sessionStorage.removeItem('gaia.at.birthday');
+        return callback(null)
+      },
+      error: function (xhr, status, err) {
+        console.error(xhr.url, status, err.toString());
+        return callback((err.toString() + ' (Reason: ' + (xhr.responseJSON ? xhr.responseJSON.message : 'unkonwn') + ')'));
+      }
+    });
+  }
+}
+
+exports.fetch = ApiTokenFetcher;
+exports.revoke = ApiTokenRevoker;
