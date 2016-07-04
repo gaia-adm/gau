@@ -9,7 +9,6 @@ var bePath = require('../SharedConsts').bePath;
 require('request').debug = false;
 
 
-
 var serverName = process.env.SRV_DNS;
 var subdomain = process.env.WH_SUBDOMAIN ? process.env.WH_SUBDOMAIN : ''; //webhook.
 var port = subdomain ? '' : ':88';
@@ -31,22 +30,21 @@ routerATC.get('/' + bePath + '/hello/:user?', function (req, res) {
 routerATC.get('/' + bePath + '/apitoken', function (req, res) {
   var gCookie = req.cookies['gaia.it'];
   console.log('gaia.it cookie provided:' + gCookie);
-  if (false) {
+  if (!gCookie) {
     console.log('Unauthorized request to ' + req.originalUrl);
     res.status(HttpStatus.UNAUTHORIZED).send();
   } else {
     var options = {
-      url: 'http://' + subdomain + serverName + port + '/sts/facade/getmyapitoken/',
+      url: 'http://' + serverName + port + '/sts/facade/getmyapitoken/',
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Cookie': "gaia.it="+gCookie
+        'Cookie': "gaia.it=" + gCookie
       }
     };
     request.get(options, function (err, resRemote, body) {
       if (err) {
-        //TODO - boris: prevent endless loop, if no cookie provided
         res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({message: err.message});
       } else {
         if (resRemote.statusCode != HttpStatus.OK) {
@@ -59,6 +57,42 @@ routerATC.get('/' + bePath + '/apitoken', function (req, res) {
       }
     });
   }
+});
+
+routerATC.delete('/' + bePath + '/apitoken/:tokenValue', function (rec, res) {
+  //http://localhost:9001/sts/oauth/token/revoke?token=392df810-c616-4f8c-b190-604c9aaf85d8
+  var tv = req.params.tokenValue;
+  console.log('API Token revoke request is being handled...')
+  var gCookie = req.cookies['gaia.it'];
+  console.log('gaia.it cookie provided:' + gCookie);
+  if (!gCookie) {
+    console.log('Unauthorized request to ' + req.originalUrl);
+    res.status(HttpStatus.UNAUTHORIZED).send();
+  } else {
+    var options = {
+      url: 'http://' + serverName + port + '/sts/oauth/token/revoke?token=' + tv,
+      method: 'DELETE',
+      'HEADERS': {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Cookie': "gaia.it=" + gCookie
+      }
+    }
+  }
+  ;
+  request.delete(options, function (err, resRemote, body) {
+    if (err) {
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({message: err.message});
+    } else {
+      if (resRemote.statusCode != HttpStatus.OK) {
+        console.log('Error: ' + resRemote.statusMessage + '; called ' + options.url);
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({message: resRemote.statusMessage});
+      } else {
+        console.log('API token revoked: ' + tv);
+        res.status(HttpStatus.OK).send();
+      }
+    }
+  })
 });
 
 
