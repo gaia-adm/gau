@@ -59,7 +59,7 @@ routerATC.get('/' + bePath + '/apitoken', function (req, res) {
   }
 });
 
-routerATC.delete('/' + bePath + '/apitoken/:tokenValue', function (rec, res) {
+routerATC.delete('/' + bePath + '/apitoken/:tokenValue', function (req, res) {
   //http://localhost:9001/sts/oauth/token/revoke?token=392df810-c616-4f8c-b190-604c9aaf85d8
   var tv = req.params.tokenValue;
   console.log('API Token revoke request is being handled...')
