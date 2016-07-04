@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button} from 'react-bootstrap'
+import {Alert, Button} from 'react-bootstrap'
 import ApiTokenFetcher from '../utils/ApiTokenFetcher'
 
 var ApiTokenBox = React.createClass({
@@ -11,13 +11,15 @@ var ApiTokenBox = React.createClass({
     if (!myTokenValue || !myTokenBirthday) {
       return {
         token: null,
-        createdAt: null
+        createdAt: null,
+        confirmDelete: false
       }
     } else {
       return {
         token: myTokenValue,
         createdAt: myTokenBirthday,
-        errorMessage: null
+        errorMessage: null,
+        confirmDelete: false
       }
     }
   },
@@ -42,10 +44,6 @@ var ApiTokenBox = React.createClass({
     }
   },
 
-  revokeMyToken() {
-    alert('Not implemented yet');
-  },
-
   createMarkup() {
     var infoString;
     if (this.state.token && this.state.createdAt) {
@@ -57,8 +55,45 @@ var ApiTokenBox = React.createClass({
     }
     return {__html: infoString};
   },
-
+  //start handling webhook deletion - when Delete button pressed in Webhook object
+  revokeMyToken(){
+    console.log('API token deletion request for ' + this.state.token);
+    this.setState({confirmDelete: true});
+  },
+  //handle final decision - should the webhook be deleted or not
+  handleDeleteConfirmationDismiss(shouldDelete) {
+    if (shouldDelete) {
+      console.log('API token deletion confirmed for ' + this.state.token);
+      this.setState({confirmDelete: false});
+//      this.deleteToken();
+    } else {
+      console.log('API token deletion cancelled for ' + this.state.token);
+      this.setState({confirmDelete: false});
+    }
+  },
   render: function () {
+    //Delete confirmation dialog
+    if (this.state.confirmDelete) {
+      return (
+        <div>
+          <h2 style={{'textAlign': 'center', 'backgroundColor': '#D96363', 'color': '#FFFFFF'}}>API Token</h2>
+          <div className='tokenBox'>
+            <Alert bsStyle='danger'>
+              <div style={{'textAlign': 'center'}}>
+                <h4>Your are going to delete API token {this.state.token}.<br/>
+                  This action is not recoverable in terms of restoring exactly the same token, although you can generate another one instead.<br/>
+                  <b>NOTE:</b> all current webhook configurations will become invalid, if you remove current API token; you'll need to recreate
+                  webhook configurations after the new API token generation.</h4>
+                <h4>Are you sure?</h4>
+                <Button onClick={this.handleDeleteConfirmationDismiss.bind(null, true)}>Yes, delete it!</Button>
+                <Button onClick={this.handleDeleteConfirmationDismiss.bind(null, false)}>No, keep this one!</Button>
+              </div>
+            </Alert>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div>
         <h2 style={{'textAlign': 'center', 'backgroundColor': '#e7e7e7', 'color': '#003366'}}>API Token</h2>
