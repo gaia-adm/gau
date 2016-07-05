@@ -1,15 +1,16 @@
 'use strict';
 
+//goes to logout page since it automatically redirects to /login but also cleans gaia.it HttpOnly cookie
 var GauLogin = function () {
   sessionStorage.removeItem('gaia.at.value');
   sessionStorage.removeItem('gaia.at.birthday');
-  window.location='http://gaia-local.skydns.local:88/sts/login';
+  window.location=window.location.protocol+'//'+window.location.host+'/sts/logout';
 };
 
 var GauLogout = function () {
   sessionStorage.removeItem('gaia.at.value');
   sessionStorage.removeItem('gaia.at.birthday');
-  window.location='http://gaia-local.skydns.local:88/sts/logout';
+  window.location=window.location.protocol+'//'+window.location.host+'/sts/logout';
   return false;
 };
 
