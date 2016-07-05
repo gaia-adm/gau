@@ -52,4 +52,3 @@ app.listen(app.get('port'), function () {
   logger.info('React-ws server has started on port ' + app.get('port'));
 });
 
-
