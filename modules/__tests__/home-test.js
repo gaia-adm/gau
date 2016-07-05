@@ -6,7 +6,8 @@ import TestUtils from 'react-addons-test-utils';
 import Home from '../Home';
 
 describe('HomeTest', () => {
-  it('Home, sweet home', () => {
+
+  it('HomeAppearance', () => {
     const ho = TestUtils.renderIntoDocument(
       <Home />
     );
@@ -15,5 +16,20 @@ describe('HomeTest', () => {
     expect(TestUtils.isDOMComponent(hono)).toBe(true);
     expect(hono.tagName.toLowerCase()).toEqual('div');
     expect(hono.querySelector('h2').textContent).toEqual('Welcome to Gaia Administration!');
-  })
+  });
+
+  it('HoweWhenUserLoggedIn', () => {
+    const ho = TestUtils.renderIntoDocument(<Home />);
+    expect(ho.state.loggedIn).toBeFalsy();
+    ho.isLoggedIn(true);
+    expect(ho.state.loggedIn).toBeTruthy();
+  });
+
+  it('HoweWhenUserFailedToLogin', () => {
+    const ho = TestUtils.renderIntoDocument(<Home />);
+    expect(ho.state.loggedIn).toBeFalsy();
+    ho.isLoggedIn(false);
+    expect(ho.state.loggedIn).toBeFalsy();
+  });
+
 });
