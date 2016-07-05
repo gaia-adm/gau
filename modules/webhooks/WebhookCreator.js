@@ -57,6 +57,14 @@ var WebhookCreator = React.createClass({
     this.setState({invalidInput: null});
   },
 
+  resetForm: function () {
+    this.setState({
+      datasource: '',
+      event: '',
+      tsField: '',
+      invalidInput: false
+    })
+  },
 
   render: function () {
     if (this.state.invalidInput) {
@@ -105,7 +113,7 @@ var WebhookCreator = React.createClass({
                                         placeholder='Optional - enter timestamp field (for example, changesets.values[0].toCommit.authorTimestamp)'
                                         onChange={this.handleTimestampValue}/></Col>
             </FormGroup>
-            <Button bsStyle='warning' type='reset'>
+            <Button bsStyle='warning' type='reset' onClick={this.resetForm}>
               Reset
             </Button>
             <Button bsStyle='info' type='button' style={{'marginLeft': '10px'}}
