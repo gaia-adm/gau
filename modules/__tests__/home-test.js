@@ -14,6 +14,6 @@ describe('HomeTest', () => {
     expect(TestUtils.isCompositeComponent(ho)).toBe(true);
     expect(TestUtils.isDOMComponent(hono)).toBe(true);
     expect(hono.tagName.toLowerCase()).toEqual('div');
-    expect(hono.querySelector('h2').textContent).toEqual('Welcome to Gaia home!');
+    expect(hono.querySelector('h2').textContent).toEqual('Welcome to Gaia Administration!');
   })
 });

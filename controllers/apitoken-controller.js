@@ -59,6 +59,40 @@ routerATC.get('/' + bePath + '/apitoken', function (req, res) {
   }
 });
 
+//verify, if logged in (cookie set)
+routerATC.get('/' + bePath + '/verify', function (req, res) {
+  var gCookie = req.cookies['gaia.it'];
+  console.log('gaia.it cookie provided:' + gCookie);
+  if (!gCookie) {
+    console.log('Unauthorized request to ' + req.originalUrl);
+    res.status(HttpStatus.UNAUTHORIZED).send();
+  } else {
+    var options = {
+      url: 'http://' + serverName + port + '/sts/verify/',
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Cookie': "gaia.it=" + gCookie
+      }
+    };
+    request.get(options, function (err, resRemote, body) {
+      if (err) {
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({message: err.message});
+      } else {
+        if (resRemote.statusCode != HttpStatus.OK) {
+          console.log('Error: ' + resRemote.statusMessage + '; called ' + options.url);
+          res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({message: resRemote.statusMessage});
+        } else {
+          console.log('API token verified');
+          res.status(HttpStatus.OK).send();
+        }
+      }
+    });
+  }
+});
+
+//revoke token
 routerATC.delete('/' + bePath + '/apitoken/:tokenValue', function (req, res) {
   //http://localhost:9001/sts/oauth/token/revoke?token=392df810-c616-4f8c-b190-604c9aaf85d8
   var tv = req.params.tokenValue;
