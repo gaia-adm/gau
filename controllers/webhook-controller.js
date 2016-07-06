@@ -4,35 +4,33 @@ var express = require('express');
 var routerWHC = express.Router();
 var HttpStatus = require('http-status-codes');
 var request = require('request');
-var bePath = require('../SharedConsts').bePath;
+var shared = require('../SharedConsts');
 
 require('request').debug = false;
 
-var serverName = process.env.SRV_DNS;
-var subdomain = process.env.WH_SUBDOMAIN ? process.env.WH_SUBDOMAIN : ''; //webhook.
-var port = subdomain ? '' : ':88';
+var whs = process.env.WH_SERVER ? process.env.WH_SERVER : 'whs.skydns.local:3000';
 
 //for testing
-routerWHC.use('/' + bePath + '/*', function (req, res, next) {
+routerWHC.use('/' + shared.bePath + '/*', function (req, res, next) {
   console.log('Got ' + req.method + ' request to backend: ' + req.protocol + '://' + req.get('host') + req.originalUrl);
   next();
 });
 //for testing
-routerWHC.get('/' + bePath + '/hello/:user?', function (req, res) {
+routerWHC.get('/' + shared.bePath + '/hello/:user?', function (req, res) {
   var user = req.params.user ? req.params.user : 'nobody';
   console.log('Send greetings to ' + user);
   res.status(HttpStatus.OK).json({message: 'Hello, ' + user});
 });
 
 //get all webhooks for the tenant
-routerWHC.get('/' + bePath + '/webhook', function (req, res) {
+routerWHC.get('/' + shared.bePath + '/webhook', function (req, res) {
   var token = req.get('Authorization');
   if (!token) {
     console.log('Unauthorized request to ' + req.originalUrl);
     res.status(HttpStatus.UNAUTHORIZED).send();
   } else {
     var options = {
-      url: 'http://' + subdomain + serverName + port +'/wh/config/',
+      url: 'http://'+whs+'/wh/config/',
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -57,14 +55,14 @@ routerWHC.get('/' + bePath + '/webhook', function (req, res) {
 });
 
 //create new webhook
-routerWHC.post('/' + bePath + '/webhook', function (req, res) {
+routerWHC.post('/' + shared.bePath + '/webhook', function (req, res) {
   var token = req.get('Authorization');
   if (!token) {
     console.log('Unauthorized request to ' + req.originalUrl);
     res.status(HttpStatus.UNAUTHORIZED).send();
   } else {
     var options = {
-      url: 'http://' + subdomain + serverName + port + '/wh/config/',
+      url: 'http://'+whs+'/wh/config/',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -91,7 +89,7 @@ routerWHC.post('/' + bePath + '/webhook', function (req, res) {
 });
 
 //delete webhook by id
-routerWHC.delete('/' + bePath + '/webhook/:id', function (req, res) {
+routerWHC.delete('/' + shared.bePath + '/webhook/:id', function (req, res) {
   var token = req.get('Authorization');
   if (!token) {
     console.log('Unauthorized request to ' + req.originalUrl);
@@ -101,7 +99,7 @@ routerWHC.delete('/' + bePath + '/webhook/:id', function (req, res) {
       res.status(HttpStatus.BAD_REQUEST).json({message: 'webhook id is missing'});
     };
     var options = {
-      url: 'http://' + subdomain + serverName + port + '/wh/config/'+req.params.id,
+      url: 'http://'+whs+'/wh/config/'+req.params.id,
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

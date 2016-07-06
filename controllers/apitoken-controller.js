@@ -4,30 +4,28 @@ var express = require('express');
 var routerATC = express.Router();
 var HttpStatus = require('http-status-codes');
 var request = require('request');
-var bePath = require('../SharedConsts').bePath;
+var shared = require('../SharedConsts');
 
 require('request').debug = false;
 
 
-var serverName = process.env.SRV_DNS;
-var subdomain = process.env.WH_SUBDOMAIN ? process.env.WH_SUBDOMAIN : ''; //webhook.
-var port = subdomain ? '' : ':88';
-
+var sts = process.env.AUTH_SERVER ? process.env.AUTH_SERVER : 'sts.skydns.local:8080';
+console.log('STS is on ' + sts);
 
 //for testing
-routerATC.use('/' + bePath + '/*', function (req, res, next) {
+routerATC.use('/' + shared.bePath + '/*', function (req, res, next) {
   console.log('Got ' + req.method + ' request to backend: ' + req.originalUrl);
   next();
 });
 //for testing
-routerATC.get('/' + bePath + '/hello/:user?', function (req, res) {
+routerATC.get('/' + shared.bePath + '/hello/:user?', function (req, res) {
   var user = req.params.user ? req.params.user : 'nobody';
   console.log('Send greetings to ' + user);
   res.status(HttpStatus.OK).json({message: 'Hello, ' + user});
 });
 
 //get my api token, if exists
-routerATC.get('/' + bePath + '/apitoken', function (req, res) {
+routerATC.get('/' + shared.bePath + '/apitoken', function (req, res) {
   var gCookie = req.cookies['gaia.it'];
   console.log('gaia.it cookie provided:' + gCookie);
   if (!gCookie) {
@@ -35,7 +33,7 @@ routerATC.get('/' + bePath + '/apitoken', function (req, res) {
     res.status(HttpStatus.UNAUTHORIZED).send();
   } else {
     var options = {
-      url: 'http://' + serverName + port + '/sts/facade/getmyapitoken/',
+      url: 'http://'+sts+'/sts/facade/getmyapitoken/',
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -60,7 +58,7 @@ routerATC.get('/' + bePath + '/apitoken', function (req, res) {
 });
 
 //verify, if logged in (cookie set)
-routerATC.get('/' + bePath + '/verify', function (req, res) {
+routerATC.get('/' + shared.bePath + '/verify', function (req, res) {
   var gCookie = req.cookies['gaia.it'];
   console.log('gaia.it cookie provided:' + gCookie);
   if (!gCookie) {
@@ -68,7 +66,7 @@ routerATC.get('/' + bePath + '/verify', function (req, res) {
     res.status(HttpStatus.UNAUTHORIZED).send();
   } else {
     var options = {
-      url: 'http://' + serverName + port + '/sts/verify/',
+      url: 'http://'+sts+'/sts/verify/',
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -93,7 +91,7 @@ routerATC.get('/' + bePath + '/verify', function (req, res) {
 });
 
 //revoke token
-routerATC.delete('/' + bePath + '/apitoken/:tokenValue', function (req, res) {
+routerATC.delete('/' + shared.bePath + '/apitoken/:tokenValue', function (req, res) {
   //http://localhost:9001/sts/oauth/token/revoke?token=392df810-c616-4f8c-b190-604c9aaf85d8
   var tv = req.params.tokenValue;
   console.log('API Token revoke request is being handled...')
@@ -104,7 +102,7 @@ routerATC.delete('/' + bePath + '/apitoken/:tokenValue', function (req, res) {
     res.status(HttpStatus.UNAUTHORIZED).send();
   } else {
     var options = {
-      url: 'http://' + serverName + port + '/sts/oauth/token/revoke?token=' + tv,
+      url: 'http://'+sts+'/sts/oauth/token/revoke?token=' + tv,
       method: 'DELETE',
       'HEADERS': {
         'Content-Type': 'application/json',
