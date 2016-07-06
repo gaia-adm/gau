@@ -18,6 +18,15 @@
   },
   "jest": {
     "setupTestFrameworkScriptFile": "./setup-jasmine-env.js",
+    "collectCoverageOnlyFrom": {
+      "./modules/webhooks/Webhook.js": true,
+      "./modules/webhooks/WebhookEditor.js": true,
+      "./modules/webhooks/WebhookList.js": true,
+      "./modules/utils/HomeRestClient.js": true,
+      "./modules/components/LoginButton.js": true,
+      "./modules/components/LogoutButton.js": true,
+      "./modules/Home.js": true
+    },
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/react/",
       "<rootDir>/node_modules/react-dom/",
