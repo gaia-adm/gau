@@ -18,7 +18,7 @@ test:
   override:
     # run unit tests and coverage
     - docker run --name unit-test-runner gaiaadm/gau  npm run test:cov
-    - docker cp unit-test-runner:/src/test-results/test-results-*.xml $CIRCLE_TEST_REPORTS
+    - docker cp unit-test-runner:/src/test-results/ $CIRCLE_TEST_REPORTS
     # run lint
     - docker run --name unit-test-lint gaiaadm/gau  npm run test:lint
   post:
