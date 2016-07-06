@@ -6,8 +6,8 @@ ARG PROXY
 
 ENV http_proxy $PROXY
 ENV https_proxy $PROXY
-RUN npm config set proxy $PROXY
-RUN npm config set https-proxy $PROXY
+RUN if [[ $http_proxy ]]; then npm config set proxy $PROXY; fi;
+RUN if [[ $http_proxy ]]; then npm config set https-proxy $PROXY; fi;
 
 # Set the working directory
 WORKDIR /src
@@ -15,6 +15,7 @@ WORKDIR /src
 # Bundle app source
 COPY . /src
 
+RUN npm config set registry http://registry.npmjs.org
 RUN npm install
 RUN npm install -g webpack
 RUN webpack
