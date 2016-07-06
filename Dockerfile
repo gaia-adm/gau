@@ -16,7 +16,7 @@ WORKDIR /src
 COPY . /src
 
 RUN npm set progress=false
-RUN time npm install
+RUN npm install
 RUN npm install -g webpack
 RUN webpack
 

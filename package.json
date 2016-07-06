@@ -17,11 +17,13 @@
     "test:lint": "eslint ./modules --ext .js --ext .jsx --ignore-path .gitignore --cache"
   },
   "jest": {
+    "setupTestFrameworkScriptFile": "./setup-jasmine-env.js",
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/react/",
       "<rootDir>/node_modules/react-dom/",
       "<rootDir>/node_modules/react-bootstrap/",
-      "<rootDir>/node_modules/react-addons-test-utils/"
+      "<rootDir>/node_modules/react-addons-test-utils/",
+      "<rootDir>/node_modules/jasmine-reporters"
     ]
   },
   "dependencies": {
@@ -49,6 +51,7 @@
     "eslint": "^2.11.1",
     "eslint-plugin-react": "^5.1.1",
     "jest-cli": "^12.1.1",
+    "jasmine-reporters": "^2.1.1",
     "react-addons-test-utils": "^15.1.0",
     "webpack": "^1.13.1",
     "webpack-node-externals": "^1.2.0"

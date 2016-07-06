@@ -10,9 +10,7 @@ dependencies:
     - sudo apt-get update && sudo apt-get install jq openssl curl
     # download update_service script
     - curl -LO https://raw.githubusercontent.com/gaia-adm/gaia-fleet/master/update_service.sh && chmod +x update_service.sh
-    - npm config set registry http://registry.npmjs.org
   override:
-    - npm config list
     - docker build -t gaiaadm/gau .
     - docker tag gaiaadm/gau gaiaadm/gau:$CIRCLE_BUILD_NUM-$CIRCLE_BRANCH
     - docker tag gaiaadm/gau gaiaadm/gau:$CIRCLE_BRANCH
@@ -20,10 +18,11 @@ test:
   override:
     # run unit tests and coverage
     - docker run --name unit-test-runner gaiaadm/gau  npm run test:cov
+    - docker cp unit-test-runner:/src/test-results/test-results-*.xml $CIRCLE_TEST_REPORTS
     # run lint
     - docker run --name unit-test-lint gaiaadm/gau  npm run test:lint
   post:
-    - find . -type f -regex ".*/coverage/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/ \;
+    # - find . -type f -regex ".*/coverage/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/ \;
     #- bash <(curl -s https://codecov.io/bash)
 deployment:
   continuous:
