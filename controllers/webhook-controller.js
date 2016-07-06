@@ -6,19 +6,22 @@ var HttpStatus = require('http-status-codes');
 var request = require('request');
 var shared = require('../SharedConsts');
 
+var log4js = require('log4js');
+var logger = log4js.getLogger('webhook-controller.js');
+
 require('request').debug = false;
 
 var whs = process.env.WH_SERVER ? process.env.WH_SERVER : 'whs.skydns.local:3000';
 
 //for testing
 routerWHC.use('/' + shared.bePath + '/*', function (req, res, next) {
-  console.log('Got ' + req.method + ' request to backend: ' + req.protocol + '://' + req.get('host') + req.originalUrl);
+  logger.trace('Got ' + req.method + ' request to backend: ' + req.protocol + '://' + req.get('host') + req.originalUrl);
   next();
 });
 //for testing
 routerWHC.get('/' + shared.bePath + '/hello/:user?', function (req, res) {
   var user = req.params.user ? req.params.user : 'nobody';
-  console.log('Send greetings to ' + user);
+  logger.trace('Send greetings to ' + user);
   res.status(HttpStatus.OK).json({message: 'Hello, ' + user});
 });
 
@@ -26,7 +29,7 @@ routerWHC.get('/' + shared.bePath + '/hello/:user?', function (req, res) {
 routerWHC.get('/' + shared.bePath + '/webhook', function (req, res) {
   var token = req.get('Authorization');
   if (!token) {
-    console.log('Unauthorized request to ' + req.originalUrl);
+    logger.error('Unauthorized request to ' + req.originalUrl);
     res.status(HttpStatus.UNAUTHORIZED).send();
   } else {
     var options = {
@@ -43,10 +46,10 @@ routerWHC.get('/' + shared.bePath + '/webhook', function (req, res) {
         res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({message: err.message});
       } else {
         if (resRemote.statusCode != HttpStatus.OK) {
-          console.log('Error: ' + resRemote.statusMessage + '; called ' + options.url);
+          logger.error('Error: ' + resRemote.statusMessage + '; called ' + options.url);
           res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({message: resRemote.statusMessage});
         } else {
-          console.log('Webhooks list received: ' + body);
+          logger.debug('Webhooks list received');
           res.status(HttpStatus.OK).json(JSON.parse(body));
         }
       }
@@ -58,7 +61,7 @@ routerWHC.get('/' + shared.bePath + '/webhook', function (req, res) {
 routerWHC.post('/' + shared.bePath + '/webhook', function (req, res) {
   var token = req.get('Authorization');
   if (!token) {
-    console.log('Unauthorized request to ' + req.originalUrl);
+    logger.error('Unauthorized request to ' + req.originalUrl);
     res.status(HttpStatus.UNAUTHORIZED).send();
   } else {
     var options = {
@@ -77,10 +80,10 @@ routerWHC.post('/' + shared.bePath + '/webhook', function (req, res) {
         res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({message: err.message});
       } else {
         if (resRemote.statusCode != HttpStatus.OK) {
-          console.log('Error: ' + resRemote.statusMessage + '; called ' + options.url);
+          logger.error('Error: ' + resRemote.statusMessage + '; called ' + options.url);
           res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({message: resRemote.statusMessage});
         } else {
-          console.log('Webhooks list received: ' + JSON.stringify(body));
+          logger.debug('New webhook was created for '+req.body.datasource);
           res.status(HttpStatus.CREATED).json(body);
         }
       }
@@ -92,7 +95,7 @@ routerWHC.post('/' + shared.bePath + '/webhook', function (req, res) {
 routerWHC.delete('/' + shared.bePath + '/webhook/:id', function (req, res) {
   var token = req.get('Authorization');
   if (!token) {
-    console.log('Unauthorized request to ' + req.originalUrl);
+    logger.error('Unauthorized request to ' + req.originalUrl);
     res.status(HttpStatus.UNAUTHORIZED).send();
   } else {
     if(!req.params.id){
@@ -112,9 +115,10 @@ routerWHC.delete('/' + shared.bePath + '/webhook/:id', function (req, res) {
         res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({message: err.message});
       } else {
         if (resRemote.statusCode != HttpStatus.NO_CONTENT) {
-          console.log('Error: ' + resRemote.statusMessage+'; called ' + options.url);
+          logger.error('Error: ' + resRemote.statusMessage+'; called ' + options.url);
           res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({message: resRemote.statusMessage});
         } else {
+          logger.debug('Webhook deleted with id ' + req.params.id);
           res.status(HttpStatus.NO_CONTENT).send();
         }
       }

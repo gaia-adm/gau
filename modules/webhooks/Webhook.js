@@ -27,7 +27,7 @@ var Webhook = React.createClass({
   },
   render: function () {
     return (
-      <div className='token' refs='aaa'>
+      <div className='token'>
         <b>Datasource:</b> {this.props.datasource}&nbsp;<b>Event:</b> {this.props.event}
         <br/><b>URL:</b> {this.props.hookUrl}<br/>
         { this.state.showEditor ? <WebhookEditor tsField={this.props.tsField} datasource={this.props.datasource} event={this.props.event} /> : null }

@@ -10,7 +10,7 @@ log4js.replaceConsole();
 if (process.env.LOG_LEVEL) {
   log4js.setGlobalLogLevel(process.env.LOG_LEVEL);
 } else {
-  log4js.setGlobalLogLevel('DEBUG');
+  log4js.setGlobalLogLevel('INFO');
 }
 var logger = log4js.getLogger('server');
 
