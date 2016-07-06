@@ -50,7 +50,6 @@ describe('ApiTokenBox tests', function () {
 
   it('GetMyToken', function () {
     const atb = TestUtils.renderIntoDocument(<ApiTokenBox/>);
-    const atbNode = ReactDom.findDOMNode(atb);
     atb.getMyTokenAjax();
     expect(ApiTokenRC.fetch).toBeCalled();
     expect(ApiTokenRC.fetch.mock.calls.length).toBe(1);
