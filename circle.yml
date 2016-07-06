@@ -10,6 +10,7 @@ dependencies:
     - sudo apt-get update && sudo apt-get install jq openssl curl
     # download update_service script
     - curl -LO https://raw.githubusercontent.com/gaia-adm/gaia-fleet/master/update_service.sh && chmod +x update_service.sh
+    - npm config set registry http://registry.npmjs.org
   override:
     - docker build -t gaiaadm/gau .
     - docker tag gaiaadm/gau gaiaadm/gau:$CIRCLE_BUILD_NUM-$CIRCLE_BRANCH
