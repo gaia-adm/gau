@@ -16,9 +16,16 @@
     "test:cov": "jest --coverage",
     "test:lint": "eslint ./modules --ext .js --ext .jsx --ignore-path .gitignore --cache"
   },
+  "comments": {
+    "jest:collectCoverageOnlyFrom key is needed to exclude garbage from coverage report and it does not support wildcard": true,
+    "jest:collectCoverage must be set to true, if collectCoverageOnlyFrom is in use, otherwise things fail if you run jest without coverage": true,
+    "jest:it eventually means that jest always run with coverage": true
+  },
   "jest": {
     "setupTestFrameworkScriptFile": "./setup-jasmine-env.js",
+    "collectCoverage": true,
     "collectCoverageOnlyFrom": {
+      "./modules/apitokens/ApiTokenBox.js": true,
       "./modules/webhooks/Webhook.js": true,
       "./modules/webhooks/WebhookEditor.js": true,
       "./modules/webhooks/WebhookList.js": true,
