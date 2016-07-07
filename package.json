@@ -14,6 +14,7 @@
     "start:dev": "npm install && webpack && node server.js",
     "test": "jest",
     "test:cov": "jest --coverage",
+    "test:codecov": "jest && codecov",
     "test:lint": "eslint ./modules --ext .js --ext .jsx --ignore-path .gitignore --cache"
   },
   "comments": {
@@ -22,7 +23,7 @@
     "jest:it eventually means that jest always run with coverage": true
   },
   "jest": {
-    "setupTestFrameworkScriptFile": "./setup-jasmine-env.js",
+    "coverageDirectory": "./coverage/",
     "collectCoverage": true,
     "collectCoverageOnlyFrom": {
       "./modules/apitokens/ApiTokenBox.js": true,

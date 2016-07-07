@@ -17,7 +17,7 @@ dependencies:
 test:
   override:
     # run unit tests and coverage
-    - docker run --name unit-test-runner gaiaadm/gau  npm run test:cov
+    - docker run --name unit-test-runner gaiaadm/gau  npm run test:codecov
     - docker cp unit-test-runner:/src/test-results/ $CIRCLE_TEST_REPORTS
     - docker cp unit-test-runner:/src/coverage/ $CIRCLE_TEST_REPORTS
     - find $CIRCLE_TEST_REPORTS/coverage -type f -name *.xml -exec cp {} $CIRCLE_TEST_REPORTS/ \;
