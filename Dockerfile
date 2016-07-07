@@ -15,7 +15,6 @@ RUN /tmp/setup.sh /src
 
 RUN npm set progress=false
 RUN npm install
-RUN npm install -g codecov
 RUN npm install -g webpack
 RUN webpack
 

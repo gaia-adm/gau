@@ -23,8 +23,7 @@
     "jest:it eventually means that jest always run with coverage": true
   },
   "jest": {
-    "coverageDirectory": "./coverage/",
-    "collectCoverage": true,
+    "setupTestFrameworkScriptFile": "./setup-jasmine-env.js",
     "collectCoverageOnlyFrom": {
       "./modules/apitokens/ApiTokenBox.js": true,
       "./modules/webhooks/Webhook.js": true,
