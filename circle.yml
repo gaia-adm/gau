@@ -19,9 +19,8 @@ test:
     # run unit tests and coverage
     - docker run --name unit-test-runner gaiaadm/gau  npm run test:cov
     - docker cp unit-test-runner:/src/test-results/ $CIRCLE_TEST_REPORTS
-    - docker cp unit-test-runner:/src/coverage/ $CIRCLE_TEST_REPORTS/temp
-    - find . -type f -regex "$CIRCLE_TEST_REPORTS/temp/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/ \;
-    - rm -rf $CIRCLE_TEST_REPORTS/temp
+    - docker cp unit-test-runner:/src/coverage/ $CIRCLE_TEST_REPORTS
+    - find $CIRCLE_TEST_REPORTS/coverage -type f -name *.xml -exec cp {} $CIRCLE_TEST_REPORTS/ \;
     # run lint
     - docker run --name unit-test-lint gaiaadm/gau  npm run test:lint
   post:
