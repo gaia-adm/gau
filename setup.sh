@@ -40,6 +40,7 @@ function setup_container()
     echo "Setting up container.."
 
     cd /src
+    npm set progress=false
     npm install
 }
 
