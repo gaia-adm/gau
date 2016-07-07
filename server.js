@@ -29,7 +29,7 @@ var uiPath = require('./SharedConsts').uiPath;
 app.use(require('./controllers/webhook-controller'));
 app.use(require('./controllers/apitoken-controller'));
 
-app.use(favicon(path.join(__dirname, 'public/images', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public/gau/images', 'favicon.ico')));
 
 // add trailing slash for just a root context url so that /css will work with catch-all routing below
 app.use('*', function (req, res, next) {
