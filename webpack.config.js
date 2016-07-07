@@ -10,9 +10,9 @@ module.exports = {
   //devtool: 'source-map', //smaller package but worse for debugging - ~7 times difference in bundle size
   entry: './index.js',
   output: {
-    path: 'public',
+    path: 'public/gau',
     filename: 'bundle.js',
-    publicPath:'/'
+    publicPath:'/gau/'
   },
   plugins: process.env.NODE_ENV === 'production' ? [
     //cannot see any effect; should EnvironmentPlugin be configured?
