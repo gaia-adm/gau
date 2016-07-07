@@ -20,7 +20,8 @@ test:
     - docker run --name unit-test-runner gaiaadm/gau  npm run test:cov
     - docker cp unit-test-runner:/src/test-results/ $CIRCLE_TEST_REPORTS
     - docker cp unit-test-runner:/src/coverage/ $CIRCLE_TEST_REPORTS
-    - find $CIRCLE_TEST_REPORTS/coverage -type f -name coverage-final.json -exec cp {} $CIRCLE_TEST_REPORTS/ \;
+    - cp $CIRCLE_TEST_REPORTS/coverage/coverage-final.json $CIRCLE_TEST_REPORTS/coverage.json
+    - find $CIRCLE_TEST_REPORTS/coverage -type f -name lcov.info -exec cp {} $CIRCLE_TEST_REPORTS/ \;
     # run lint
     - docker run --name unit-test-lint gaiaadm/gau  npm run test:lint
   post:
