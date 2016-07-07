@@ -4,6 +4,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var path = require('path');
+var favicon = require('serve-favicon');
 var log4js = require('log4js');
 
 log4js.replaceConsole();
@@ -28,6 +29,7 @@ var uiPath = require('./SharedConsts').uiPath;
 app.use(require('./controllers/webhook-controller'));
 app.use(require('./controllers/apitoken-controller'));
 
+app.use(favicon(path.join(__dirname, 'public/images', 'favicon.ico')));
 
 // add trailing slash for just a root context url so that /css will work with catch-all routing below
 app.use('*', function (req, res, next) {
