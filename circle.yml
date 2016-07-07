@@ -19,17 +19,20 @@ test:
     # run unit tests and coverage
     - docker run --name unit-test-runner gaiaadm/gau  npm run test:cov
     - docker cp unit-test-runner:/src/test-results/ $CIRCLE_TEST_REPORTS
+    - docker cp unit-test-runner:/src/coverage/ $CIRCLE_TEST_REPORTS/temp
+    - find . -type f -regex "$CIRCLE_TEST_REPORTS/temp/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/ \;
+    - rm -rf $CIRCLE_TEST_REPORTS/temp
     # run lint
     - docker run --name unit-test-lint gaiaadm/gau  npm run test:lint
   post:
-    # - find . -type f -regex ".*/coverage/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/ \;
-    #- bash <(curl -s https://codecov.io/bash)
+    - bash <(curl -s https://codecov.io/bash)
 deployment:
   continuous:
     branch: [master, develop, /.*feature_.*/]
     commands:
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
       - docker push gaiaadm/gau
+      - ./update_service.sh -t $CIRCLE_BRANCH -b $CIRCLE_BUILD_NUM -f gau-service.service -n gau
 notify:
   webhooks:
     - url: https://webhook.master.gaiahub.io/wh/5a866f9b-98c9-438d-a8d4-53cf4ae9599c/4c310c8e220ee9bead74eece42ce0e109fd3535e
