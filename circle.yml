@@ -21,7 +21,9 @@ test:
     - docker cp unit-test-runner:/src/test-results/ $CIRCLE_TEST_REPORTS
     - docker cp unit-test-runner:/src/coverage/ $CIRCLE_TEST_REPORTS
     - cp $CIRCLE_TEST_REPORTS/coverage/coverage-final.json $CIRCLE_TEST_REPORTS/coverage.json
+    - cp $CIRCLE_TEST_REPORTS/coverage/coverage-final.json $CIRCLE_TEST_REPORTS/coverage/coverage.json
     - find $CIRCLE_TEST_REPORTS/coverage -type f -name lcov.info -exec cp {} $CIRCLE_TEST_REPORTS/ \;
+    - find . -type f -regex "$CIRCLE_TEST_REPORTS/coverage/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/ \;
     # run lint
     - docker run --name unit-test-lint gaiaadm/gau  npm run test:lint
   post:
