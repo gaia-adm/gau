@@ -14,4 +14,4 @@ RUN chmod +x /tmp/setup.sh && sync && /tmp/setup.sh /src
 RUN npm install && npm install -g webpack && webpack
 
 EXPOSE  4000
-CMD ["npm", "start:prod"]
+CMD ["npm", "run", "start:prod"]
