@@ -10,7 +10,7 @@ var WebhookList = React.createClass({
   render: function () {
     var tokens = this.props.data.map(function (t) {
       return (
-        <Webhook key={t.token} tid={t.token} datasource={t.datasource} event={t.eventType} hookUrl={t.hookUrl} tsField={t.tsField}/>
+        <Webhook key={t.token} tid={t.token} datasource={t.datasource} event={t.eventType} hookUrl={t.hookUrl} tsField={t.tsField} createdAt={t.createdAt} />
       );
     });
     return (
