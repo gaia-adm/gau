@@ -39,4 +39,4 @@ jspm_packages
 .idea/
 *.iml
 .eslintcache
-public/bundle.*
+public/gau/bundle.*

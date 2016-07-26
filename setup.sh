@@ -40,7 +40,7 @@ function setup_container()
     echo "Setting up container.."
 
     cd /src
-    npm set progress=false
+    npm config set registry=http://registry.npmjs.org
     npm install
 }
 

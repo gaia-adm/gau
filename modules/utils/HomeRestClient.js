@@ -6,13 +6,13 @@ import shared from '../../SharedConsts';
 var GauLogin = function () {
   sessionStorage.removeItem('gaia.at.value');
   sessionStorage.removeItem('gaia.at.birthday');
-  window.location=window.location.protocol+'//'+window.location.hostname+':88/sts/logout';
+  window.location='https://'+window.location.hostname+':444/sts/logout';
 };
 
 var GauLogout = function () {
   sessionStorage.removeItem('gaia.at.value');
   sessionStorage.removeItem('gaia.at.birthday');
-  window.location=window.location.protocol+'//'+window.location.hostname+':88/sts/logout';
+  window.location='https://'+window.location.hostname+':444/sts/logout';
   return false;
 };
 
