@@ -70,6 +70,7 @@ routerWHC.post('/' + shared.bePath + '/webhook', function (req, res) {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
+        'X-ORIG-SERVER': req.host,
         'Authorization': token
       },
       json: req.body
