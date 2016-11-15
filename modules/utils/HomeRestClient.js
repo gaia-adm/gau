@@ -22,10 +22,17 @@ var IsLoggedIn = function (callback) {
     url: '/' + shared.bePath + '/verify',
     datatype: 'json',
     cache: false,
-    success: function () {
-      return callback(true);
+    success: function (data) {
+      var isAccountAdminId = data.accounts[0].role_ids.indexOf(1);
+      if(isAccountAdminId > -1) {
+        return callback(true);
+      } else {
+        console.error('User ' + data.firstName + ' ' + data.lastName + ' is not authorized to access Admin UI');
+        return callback(false);
+      }
     },
     error: function () {
+      console.error('User is not authenticated');
       return callback(false);
     }
   })

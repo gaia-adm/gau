@@ -87,7 +87,7 @@ routerATC.get('/' + shared.bePath + '/verify', function (req, res) {
           res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({message: resRemote.statusMessage});
         } else {
           logger.debug('API token verified');
-          res.status(HttpStatus.OK).send();
+          res.status(HttpStatus.OK).json(JSON.parse(body));
         }
       }
     });
