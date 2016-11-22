@@ -43,6 +43,9 @@ routerATC.get('/' + shared.bePath + '/apitoken', function (req, res) {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Cookie': tokenName+"=" + gCookie
+      },
+      qs: {
+        st: req.query.st
       }
     };
     request.get(options, function (err, resRemote, body) {
