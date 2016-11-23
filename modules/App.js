@@ -16,7 +16,7 @@ var App = React.createClass({
         if (results != null) {
             let selectedTenant = decodeURIComponent(results[1].replace(/\+/g, ' '));
             sessionStorage.setItem(shared.selectedTenant, selectedTenant);
-            console.log('Working with account ' + sessionStorage.setItem(shared.selectedTenant));
+            console.log('Working with account ' + sessionStorage.getItem(shared.selectedTenant));
         }
     },
 
