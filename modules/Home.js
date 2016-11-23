@@ -3,6 +3,7 @@
 import React from 'react'
 import LoginButton from './components/LoginButton'
 import LogoutButton from './components/LogoutButton'
+import WaitingButton from './components/WaitingButton'
 import HomeRC from './utils/HomeRestClient';
 
 
@@ -11,27 +12,27 @@ var Home = React.createClass({
   getInitialState() {
     HomeRC.verify(this.isLoggedIn);
     return {
-      loggedIn: false
+      loggedIn: -1
     }
   },
 
   isLoggedIn(status){
     if(status){
       console.log('User is now logged in');
-      this.setState({loggedIn:true});
+      this.setState({loggedIn:1});
     } else {
       console.log('User is now NOT logged in');
-      this.setState({loggedIn:false});
+      this.setState({loggedIn:0});
     }
   },
-  
+
   render: function () {
 
-    var homeButton;
+    var homeButton = <WaitingButton/>
 
-    if(this.state.loggedIn) {
+    if(this.state.loggedIn == 1) {
       homeButton = <LogoutButton />
-    } else {
+    } else if(this.state.loggedIn == 0) {
       homeButton = <LoginButton />
     }
 
