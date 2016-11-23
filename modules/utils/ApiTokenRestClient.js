@@ -8,7 +8,7 @@ import shared from '../../SharedConsts'
 var ApiTokenFetcher = function (callback) {
   $.ajax({
     type: 'GET',
-    url: '/' + shared.bePath + '/apitoken',
+    url: '/' + shared.bePath + '/apitoken?st=' + sessionStorage.getItem(shared.selectedTenant),
     datatype: 'json',
     cache: false,
     success: function (data) {
