@@ -20,16 +20,16 @@ describe('HomeTest', () => {
 
   it('HoweWhenUserLoggedIn', () => {
     const ho = TestUtils.renderIntoDocument(<Home />);
-    expect(ho.state.loggedIn).toBeFalsy();
+    expect(ho.state.loggedIn).toBe(-1);
     ho.isLoggedIn(true);
-    expect(ho.state.loggedIn).toBeTruthy();
+    expect(ho.state.loggedIn).toBe(1);
   });
 
   it('HoweWhenUserFailedToLogin', () => {
     const ho = TestUtils.renderIntoDocument(<Home />);
-    expect(ho.state.loggedIn).toBeFalsy();
+    expect(ho.state.loggedIn).toBe(-1);
     ho.isLoggedIn(false);
-    expect(ho.state.loggedIn).toBeFalsy();
+    expect(ho.state.loggedIn).toBe(0);
   });
 
 });
