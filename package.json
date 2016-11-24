@@ -31,6 +31,7 @@
       "./modules/utils/HomeRestClient.js": true,
       "./modules/components/LoginButton.js": true,
       "./modules/components/LogoutButton.js": true,
+      "./modules/components/WaitingButton.js": true,
       "./modules/Home.js": true
     },
     "unmockedModulePathPatterns": [
